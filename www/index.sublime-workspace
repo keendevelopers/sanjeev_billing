@@ -1,0 +1,543 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"ro",
+				"row_array"
+			],
+			[
+				"last",
+				"last_query"
+			],
+			[
+				"margin",
+				"margin"
+			],
+			[
+				"mar",
+				"margin-right"
+			],
+			[
+				"ref",
+				"ref_sv_id"
+			],
+			[
+				"tot",
+				"total_amount"
+			],
+			[
+				"tax",
+				"tax_amount"
+			],
+			[
+				"onke",
+				"onkeyup\tAttr"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"op",
+				"option\tTag"
+			],
+			[
+				"chas",
+				"chassis_select"
+			],
+			[
+				"chassis",
+				"chassis_no"
+			],
+			[
+				"vehi",
+				"vehicle_detiails"
+			],
+			[
+				"va",
+				"var"
+			],
+			[
+				"vehic",
+				"vehicle_id"
+			],
+			[
+				"val",
+				"value"
+			],
+			[
+				"is_p",
+				"is_power"
+			],
+			[
+				"add",
+				"add_vehicle_info"
+			],
+			[
+				"get",
+				"get_back"
+			],
+			[
+				"text",
+				"text-right"
+			],
+			[
+				"margi",
+				"margin-left"
+			],
+			[
+				"finan",
+				"finance_d"
+			],
+			[
+				"for",
+				"foreach\tforeach …"
+			],
+			[
+				"las",
+				"last_del_id"
+			],
+			[
+				"row",
+				"row_array"
+			],
+			[
+				"sel",
+				"sel_date"
+			],
+			[
+				"Succ",
+				"Successfull"
+			],
+			[
+				"fina",
+				"Finance"
+			],
+			[
+				"adv",
+				"last_advance"
+			],
+			[
+				"amoun",
+				"amount_payable"
+			],
+			[
+				"amount",
+				"amount_payable"
+			],
+			[
+				"due",
+				"due_date"
+			],
+			[
+				"fin",
+				"finance_de"
+			],
+			[
+				"re",
+				"required\tAttr"
+			],
+			[
+				"tota",
+				"total_fine"
+			],
+			[
+				"json",
+				"json_encode"
+			],
+			[
+				"print",
+				"print_r"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/Users/Krn/Desktop/invoice.html",
+		"/C/xampp/htdocs/billing/application/views/add_vehicle.php",
+		"/C/xampp/htdocs/billing/application/views/searchrecord.php",
+		"/C/xampp/htdocs/billing/application/views/header.php",
+		"/C/xampp/htdocs/billing/application/views/sidebar.php",
+		"/C/Users/Krn/Desktop/Zczc.php",
+		"/C/xampp/htdocs/billing/application/models/Vehicle_list.php",
+		"/C/xampp/htdocs/billing/application/models/Vehicle_model.php",
+		"/C/xampp/htdocs/billing/assets/js/calender_record.js",
+		"/C/xampp/htdocs/billing/assets/css/calender_record.css",
+		"/C/xampp/htdocs/billing/application/views/calender_record.php",
+		"/C/xampp/htdocs/billing/application/models/Admin_model.php",
+		"/C/xampp/htdocs/billing/application/views/editrecord.php",
+		"/C/xampp/htdocs/billing/application/views/addrecord.php",
+		"/C/xampp/htdocs/billing/application/controllers/Datatable_lists.php",
+		"/C/xampp/htdocs/billing/application/views/edit_vehicle_info.php",
+		"/C/xampp/htdocs/billing/application/views/viewrecords.php",
+		"/C/xampp/htdocs/billing/application/views/vehicle_invoice.php",
+		"/C/xampp/htdocs/billing/application/models/Invoice_list_model.php",
+		"/C/xampp/htdocs/billing/application/views/footer.php",
+		"/C/xampp/htdocs/billing/application/views/view_stock_vehicles.php",
+		"/C/xampp/htdocs/billing/application/views/Invoice.php",
+		"/C/xampp/htdocs/finance/application/views/Admin/add_users.php",
+		"/C/xampp/htdocs/finance/application/views/Admin/addfinance.php",
+		"/C/xampp/htdocs/billing/application/views/edit_vehicle_popup.php",
+		"/C/xampp/htdocs/billing/application/views/manage_vehicle.php",
+		"/C/xampp/htdocs/finance/application/controllers/Admin/Finance.php",
+		"/C/xampp/htdocs/billing/application/views/manage_buy_vehicle.php",
+		"/C/xampp/htdocs/finance/application/views/Admin/edit_operating_authority.php",
+		"/C/xampp/htdocs/finance/application/views/Admin/view_user_finance.php",
+		"/C/xampp/htdocs/billing/application/views/add_vehicle_info.php",
+		"/C/xampp/htdocs/finance/application/views/Admin/footer.php",
+		"/C/xampp/htdocs/finance/application/controllers/Admin/Welcome.php",
+		"/C/xampp/htdocs/finance/application/views/Admin/edit_finance_popup.php",
+		"/C/xampp/htdocs/finance/application/views/Admin/header.php",
+		"/C/xampp/htdocs/finance/application/config/config.php",
+		"/C/xampp/htdocs/finance/application/config/database.php",
+		"/C/xampp/htdocs/billing/application/config/database.php",
+		"/C/xampp/htdocs/billing/application/config/config.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-2/view_pending_finance.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-2/Pending_finance.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-2/Finance.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-2/footer.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-2/edit_operating_authority.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-2/Welcome.php",
+		"/C/xampp/htdocs/billing/application/controllers/Welcome.php",
+		"/C/xampp/htdocs/billing/application/views/view_vehicle_info.php",
+		"/C/xampp/htdocs/billing/application/controllers/Vehicle.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-2/edit_customer.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-2/view_customer.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-2/viewuniversities.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-2/header.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-2/User_list_datatable.php",
+		"/C/xampp/htdocs/NagpalProducts/application/controllers/Vehicle.php",
+		"/C/xampp/htdocs/NagpalProducts/application/views/add_vehicle.php",
+		"/C/xampp/htdocs/NagpalProducts/application/views/manage_vehicle.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-2/viewstudents.php",
+		"/C/xampp/htdocs/NagpalProducts/application/views/sidebar.php",
+		"/C/xampp/htdocs/NagpalProducts/application/config/config.php",
+		"/C/xampp/htdocs/NagpalProducts/application/config/database.php",
+		"/C/xampp/htdocs/NagpalProducts/application/controllers/Welcome.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-2/add_users.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-2/addfinance.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-2/edit_finance_popup.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-2/sidebar.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-2/view_installments.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-2/index.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-3/Admin_model.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-3/index.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-3/Welcome.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-3/Finance.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-3/view_installments.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-2/edit_inst_popup.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-2/Customer_model.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-2/Coming_finance.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-2/Finance_model.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-2/Finance_model2.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-2/view_user_finance.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-2/Admin_model.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-2/login.php",
+		"/C/Users/Krn/AppData/Local/Temp/fz3temp-2/finance_list_view.php",
+		"/D/website/cooper/404.html",
+		"/C/Users/Krn/Desktop/site/HTML5 Responsive coming soon page - Matrix.htm",
+		"/C/Users/Krn/Desktop/site/HTML5 Responsive coming soon page - Matrix_files/styles.css",
+		"/C/Users/Krn/Desktop/HTML5 Responsive coming soon page - Matrix.htm",
+		"/C/Users/Krn/Desktop/site/HTML5 Responsive coming soon page - Matrix_files/css.css",
+		"/E/work/php codes/Studyheights/application/controllers/Search.php",
+		"/E/work/php codes/Studyheights/application/views/Admin/change-photo.php",
+		"/E/work/php codes/Studyheights/application/controllers/Admin/Welcome.php",
+		"/E/work/php codes/Studyheights/application/views/Admin/viewcountries.php",
+		"/C/Users/Krn/Downloads/list_test (1).php",
+		"/C/Users/Krn/Downloads/Student_list_datatable.php",
+		"/C/Users/Krn/Downloads/Student_datatable.php",
+		"/E/work/php codes/Studyheights/application/views/Admin/footer.php",
+		"/E/work/php codes/Studyheights/application/views/Admin/header.php",
+		"/E/work/php codes/Studyheights/application/controllers/New_dashboard.php",
+		"/E/work/php codes/Studyheights/application/views/lib/footer.php",
+		"/E/work/php codes/Studyheights/application/views/university.php",
+		"/E/work/php codes/Studyheights/application/controllers/University_subscription.php",
+		"/E/work/php codes/Studyheights/application/controllers/University_profile.php",
+		"/E/work/php codes/Studyheights/application/controllers/Certification.php",
+		"/E/work/php codes/Studyheights/application/controllers/Blog.php"
+	],
+	"find":
+	{
+		"height": 27.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"cancle",
+			"total_bill_amount",
+			"billtotal",
+			"get_total_bills_amount",
+			"cancle_status",
+			" (",
+			"can",
+			"manufacture",
+			"invoice_filter",
+			"year_sel",
+			"datatable",
+			"year_sel",
+			"theSelect",
+			"vehicle_list_ajax",
+			"theSelect",
+			"sel_option",
+			"vehicle_lis",
+			"theSelect",
+			"tax_name",
+			"theSelect",
+			"total",
+			"withtotal",
+			"tax_name",
+			"invoice_filter",
+			"clearfilter",
+			"invoice_list",
+			"tax_name",
+			"start_date",
+			"canc",
+			"nagpal",
+			"get_total_bills_amount",
+			"bills_total",
+			"date-range",
+			"get_total_bills_amount",
+			"htt",
+			"http://arshaw.com/js/",
+			"flatpickr",
+			"date",
+			"data",
+			"invoice_list",
+			"get_total_bills_amount",
+			"select",
+			"theSelect2",
+			"');\n",
+			"invoice_date",
+			"INVOICE NO:",
+			"col-sm-12 form-control kd_select",
+			"f_name",
+			"manufacturer",
+			"chassis",
+			"chassis_no",
+			"editrecord",
+			"cust_name",
+			"sv_id",
+			"sell_vehicle_form",
+			"name",
+			"sell_vehicle_form",
+			"<for",
+			"</for",
+			"vehicle_detiails",
+			"show_details_click",
+			"iscustomer",
+			"isvehicle",
+			"iscustomer",
+			"get_inv",
+			"iscustomer",
+			"get_user_here",
+			"get_chassis_here",
+			"get_user_here",
+			"border: 1px solid rgb(121, 121, 125);\n    padding: 10px;\n    border-radius: 11px;",
+			"vehicle_detiails",
+			"tb2",
+			"tb",
+			"tbl",
+			"example",
+			"show_finance",
+			"del_fin",
+			"del_vehicle",
+			"theSelect",
+			"edit",
+			"ehicle_form",
+			"flatpickr",
+			"theSelect",
+			"theSelect2",
+			"iscustomer",
+			"is_model",
+			"get_user_here",
+			"mymodal",
+			"edit_finance",
+			"date",
+			"flatpickr",
+			"sel_option",
+			"new_vehicle_form",
+			"vehicle_list_ajax",
+			"theDiv",
+			"is",
+			"Customer Details",
+			"finance_add_form",
+			"add_new_vehicle",
+			"get_user_here",
+			"is_cylinder",
+			"No of Cylinder",
+			"seating",
+			"is_name",
+			"theSelect2",
+			"sele",
+			"se",
+			"toa",
+			"add_fin",
+			"add_vehicle",
+			"vehicle_list",
+			"datatable",
+			"],\n",
+			"example2",
+			"pending_coming_finance",
+			"customer_details",
+			"myModal",
+			"add",
+			"modal",
+			"customer_details",
+			"modal",
+			"del_customer",
+			"toa",
+			"vehicle_add_form",
+			"customer_add_form",
+			"users",
+			"finan",
+			"edit_fi"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"vehicle_details"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 27.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "index.sublime-project",
+	"replace":
+	{
+		"height": 50.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
