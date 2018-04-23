@@ -1,0 +1,11 @@
+class book{
+  var $price;
+  var $title;
+  
+  function setPrice($par){
+      $this->price=$par;
+  }
+  function getPrice(){
+       echo $this->price;
+}
+$physics=new book;

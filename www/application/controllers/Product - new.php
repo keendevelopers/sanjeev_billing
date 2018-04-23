@@ -67,6 +67,7 @@ class Product extends CI_Controller
 
          <a class="btn btn-danger btn-mini" title="Delete Product" onclick=del_product(this,"' . $products->P_Id . '")><i class="fa fa-trash-o"></i></a>
 
+
          ';
 
             $row[] = $action;
@@ -175,8 +176,9 @@ class Product extends CI_Controller
     //Modal Box data here
     public function modal($page, $parm = "")
     {
-
+		
         $data['parm'] = $parm;
+		
         return $this->load->view($page, $data);
     }
 
@@ -258,10 +260,6 @@ class Product extends CI_Controller
 
     public function add_stock_products()
     {
-		// echo '<pre>';
-    // print_r($_POST);
-    // echo '</pre>';die();
-		
         if ($this->session->userdata('admin_id')) {
             $PostData = $this->input->post();
             $this->form_validation->set_rules('PurchasedOn', 'purchased date', 'required');
@@ -269,12 +267,11 @@ class Product extends CI_Controller
             $this->form_validation->set_rules('SubTotal', 'sub Total', 'required');
             $this->form_validation->set_rules('Total', 'net amount', 'required');
             $this->form_validation->set_rules('Tax_1_Amount', 'Centrel GST', 'required');
-            $this->form_validation->set_rules('Tax_2_Amount', 'State GST', 'required');
+             $this->form_validation->set_rules('Tax_2_Amount', 'State GST', 'required');
 
             $this->form_validation->set_rules('book_0_P_Id', 'product', 'required');
             $this->form_validation->set_rules('book_0_BP_Price', 'product price', 'required');
             $this->form_validation->set_rules('Total', 'total', 'required');
-			$this->form_validation->set_rules('Amount_paid', 'Amount Paid', 'required');
 
             if (isset($PostData['BillId']) && !empty($PostData['BillId'])) {
                 $original = $this->db->query("SELECT BillNo FROM buyed_product_bill WHERE BillId = " . $PostData['BillId'])->row()->BillNo;
@@ -301,6 +298,7 @@ class Product extends CI_Controller
                 echo json_encode($data);
                 exit;
             } else {
+				
                 $PostData['CreatedOn'] = date('Y-m-d H:i:s');
                 $bill                  = array(
                     'BillNo'      => $PostData['BillNo'],
@@ -315,7 +313,7 @@ class Product extends CI_Controller
                     'CreatedOn'   => $PostData['CreatedOn'],
                     'UserId'      => $this->session->userdata('admin_id')
                 );
-
+				
                 if (isset($PostData['BillId']) && !empty($PostData['BillId'])) {
                     if ($this->db->where('BillId', $PostData['BillId'])->update('buyed_product_bill', $bill)) {
                         $select_data = $this->db->where('BillId', $PostData['BillId'])->get('buyed_product')->result_array();
@@ -377,22 +375,22 @@ class Product extends CI_Controller
                                 $this->db->query("UPDATE product_info SET AvailQuantity = AvailQuantity + '" . $PostData['book_' . $i . '_BP_Qunatity_Total'] . "' WHERE P_Id = '" . $PostData['book_' . $i . '_P_Id'] . "'");
                             }
                         }
-						// To Insert Value in ledger table for information of left amount
 						$left_info = array(
 							'ledger_type'   =>  $_POST['ledger_type'],
 							'bill_id'       =>  $BillId,
 							'total_amount'  =>  $_POST['Total'] ? $_POST['Total']: "",
 							'amount_paid'   =>  $_POST['Amount_paid'] ? $_POST['Amount_paid'] : "",
-							'balance'       =>  $_POST['Amount_left'] ? $_POST['Amount_left'] : "",
+							'balance_left'  =>  $_POST['Amount_left'] ? $_POST['Amount_left'] : "",
 							'payment_type'  =>  $_POST['payment_type'] ? $_POST['payment_type'] : "",
-							'cheque_number' =>  isset($_POST['cheque_number']) ? $_POST['cheque_number'] : "" ,
+							'cheque_number' =>  isset($_POST['payment_type']) ? $_POST['payment_type'] : "" ,
 							'modified_on'   =>  date('Y-m-d H:i:s'),
 							'created_on'    =>  date('Y-m-d H:i:s'),
 							'userId'        =>  $_SESSION['admin_id'],
-						);
+							);
 							
-						$this->db->insert('ledger', $left_info);
-                        $data = array(
+							$this->db->insert('ledger', $left_info);
+						
+							$data = array(
                             'result'  => 'success',
                             'message' => 'Details added successfully!',
                             'title'   => 'Successfull',
@@ -429,68 +427,7 @@ class Product extends CI_Controller
             $this->load->view('login');
         }
     }
-	public function add_remain_balance(){
-		$data = array();
-		$auth = checkAdminLogin();
-        if ($auth == 1) {
-			
-            $PostData = $this->input->post();
-            $this->form_validation->set_rules('new_pay', 'New Payment', 'required');
-            
-            if ($this->form_validation->run() == false) {
-                
-				$error = $this->form_validation->error_array();
-                foreach ($error as $key => $value) {
-                    $error = $value;
-                }
 
-                $data = array(
-                    'result'  => 'danger',
-                    'message' => $error,
-                    'title'   => 'Error',
-                );
-                echo json_encode($data);
-                exit;
-            } else {
-				
-				$left_info = array(
-							'ledger_type'   =>  $_POST['ledger_type'],
-							'bill_id'       =>  $_POST['bill_id'],
-							'total_amount'  =>  $_POST['total_amount'] ? $_POST['total_amount']: "",
-							'amount_paid'   =>  $_POST['new_pay'] ? $_POST['new_pay'] : "",
-							'balance'       =>  $_POST['balance_left'] ? $_POST['balance_left'] : "",
-							'payment_type'  =>  $_POST['payment_type'] ? $_POST['payment_type'] : "",
-							'cheque_number' =>  isset($_POST['cheque_number']) ? $_POST['cheque_number'] : "" ,
-							'modified_on'   =>  date('Y-m-d H:i:s'),
-							'created_on'    =>  date('Y-m-d H:i:s'),
-							'userId'        =>  $_SESSION['admin_id'],
-						);
-				
-                if ($this->db->insert('ledger', $left_info)) {
-                    $data = array(
-                        'result'  => 'success',
-                        'message' => 'Details added successfully!',
-                        'title'   => 'Successfull',
-                    );
-					
-					redirect('product/manage_stock');
-					// header("Refresh:0");
-                    // echo json_encode($data);
-                    // exit;
-                } else {
-                    $data = array(
-                        'result'  => 'danger',
-                        'message' => 'Unable to add details!',
-                        'title'   => 'Error',
-                    );
-                    echo json_encode($data);
-                    exit;
-                }
-			}
-
-		}
-	}
-	
     public function product_list_ajax()
     {
         $list = $this->product_list->get_datatables();
@@ -551,7 +488,7 @@ class Product extends CI_Controller
     }
 
     public function view_products($billid)
-    {
+    {die();
         $data = array();
         $auth = checkAdminLogin();
         if ($auth == 1) {

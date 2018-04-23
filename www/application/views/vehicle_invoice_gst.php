@@ -352,6 +352,43 @@ $errormessage =$this->session->flashdata('error');
         <input type="text" id="total" class="form-control" name="total" placeholder="Net Total" readonly="" value="<?php echo @$inv['total']; ?>">
         </div>
         </div>
+		
+		<div class="form-group">
+            <label for="inputEmail3" class="col-sm-7 control-label">Amount To Be Paid*</label>
+            <div class="col-sm-5">
+                <input type="text" id="Amount_paid" class="form-control" name="Amount_paid" onkeyup="Left_balance(this)" placeholder="Amount Paid" value="<?php echo @$bill['amount_paid']; ?>" >
+            </div>
+        </div>
+		<div class="form-group">
+            <label for="inputEmail3" class="col-sm-7 control-label">Amount Left</label>
+            <div class="col-sm-5">
+                <input type="text" id="Amount_left" class="form-control" name="Amount_left" readonly="" placeholder="Amount Left" value="<?php echo @$bill['amount_left']; ?>" >
+			 <input type="hidden" id="ledger_type" class="form-control" name="ledger_type"  value="sell" >
+           
+		   </div>
+        </div>
+		<div class="form-group">
+            <label for="inputEmail3" class="col-sm-7 control-label">Payment Type</label>
+            <div class="col-sm-5">
+                <!--Radio group-->
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="payment_type" onclick="hideChequeField()" value="cash" checked >
+						<label class="form-check-label" for="radio100">Cash</label>
+					</div>
+
+					<div class="form-check">
+						<input class="form-check-input" type="radio" id="Cheque" class="form-control" name="payment_type" onclick="showChequeField()" value="cheque">
+						<label class="form-check-label" for="radio101">Cheque</label>
+					</div>
+			</div>
+        </div>
+		
+		<div class="form-group" style="display:none;" id="cheque_number">
+            <label for="inputEmail3" class="col-sm-7 control-label">Cheque Number*</label>
+            <div class="col-sm-5">
+                <input type="text"  class="form-control" name="cheque_number" placeholder="Cheque Number" value="<?php echo @$bill['cheque_number']; ?>" >
+            </div>
+        </div>
 
     <div class="form-group">
         <div class="col-xs-5 col-xs-offset-1">
@@ -465,6 +502,8 @@ grand_total = grand_total - offer_amount;
 grand_total = grand_total + parseFloat(labour);
 
 $('#total').val(grand_total.toFixed(2));
+
+changeBalanceLeft();
 }
 
 function get_price(obj){
@@ -482,6 +521,44 @@ $('input[name="book_'+id+'_IP_Per_Pack"]').val(pack);
 manage_total(obj);
 
 }
+
+/*for calculate balance amount left */
+function Left_balance(obj){
+	var Total = $('#total').val();
+	var Amount_paid = $('#Amount_paid').val();
+	
+	var left_balance = parseInt(Total)-parseInt(Amount_paid);
+	$('#Amount_left').val(left_balance.toFixed(2));
+}
+
+function changeBalanceLeft(){
+	
+    var Total = $('#total').val();
+	if(Total){
+	}else{
+		Total = "0";
+	}
+	
+	var Amount_paid = $('#Amount_paid').val();
+	if(Amount_paid){
+	}else{
+		Amount_paid = "0"
+	}
+	var left_balance = parseInt(Total)-parseInt(Amount_paid);
+	$('#Amount_left').val(left_balance.toFixed(2));
+	
+	
+	
+}
+function showChequeField(){
+	$('#cheque_number').show();
+}
+function hideChequeField(){
+	$('#cheque_number').hide();
+	$('#cheque_number').val("");
+}
+
+
 
 function get_gst_option(o){
 if($('#StateCode').val() == '<?php echo LOCALSTATECODE; ?>'){

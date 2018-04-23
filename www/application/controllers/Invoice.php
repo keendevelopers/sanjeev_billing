@@ -32,6 +32,9 @@ class Invoice extends CI_Controller
 
     public function add_invoice()
     {
+		// echo '<pre>';
+    // print_r($_POST);
+    // echo '</pre>';die();
         if ($this->session->userdata('admin_id')) {
             $PostData = $this->input->post();
             $this->form_validation->set_rules('inv_date', 'invoice date', 'required');
@@ -41,6 +44,7 @@ class Invoice extends CI_Controller
 
             $this->form_validation->set_rules('book_0_P_Id', 'product', 'required');
             $this->form_validation->set_rules('book_0_IP_Price', 'product price', 'required');
+			$this->form_validation->set_rules('Amount_paid', 'Amount Paid', 'required');
 
             if ($this->form_validation->run() == false) {
                 $error  = $this->form_validation->error_array();
@@ -148,6 +152,21 @@ class Invoice extends CI_Controller
                                 $this->db->query("UPDATE product_info SET AvailQuantity = AvailQuantity - ('" . $PostData['book_' . $i . '_IP_Qunatity_Total'] . "') WHERE P_Id = '" . $PostData['book_' . $i . '_P_Id'] . "'");
                             }
                         }
+						// To Insert Value in ledger table for information of left amount
+						$left_info = array(
+							'ledger_type'   =>  $_POST['ledger_type'],
+							'bill_id'       =>  $inv_id,
+							'total_amount'  =>  $_POST['Total'] ? $_POST['Total']: "",
+							'amount_paid'   =>  $_POST['Amount_paid'] ? $_POST['Amount_paid'] : "",
+							'balance'       =>  $_POST['Amount_left'] ? $_POST['Amount_left'] : "",
+							'payment_type'  =>  $_POST['payment_type'] ? $_POST['payment_type'] : "",
+							'cheque_number' =>  isset($_POST['cheque_number']) ? $_POST['cheque_number'] : "" ,
+							'modified_on'   =>  date('Y-m-d H:i:s'),
+							'created_on'    =>  date('Y-m-d H:i:s'),
+							'userId'        =>  $_SESSION['admin_id'],
+						);
+							
+						$this->db->insert('ledger', $left_info);
 
                         $data = array(
                             'result'  => 'success',

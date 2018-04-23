@@ -257,7 +257,6 @@ $errormessage =$this->session->flashdata('error');
         <input type="text" id="Total" class="form-control" name="Total" placeholder="Net Total" readonly="" value="<?php echo @$bill['Total']; ?>">
         </div>
         </div>
-		<!--pawan code  start -->
 		<div class="form-group">
             <label for="inputEmail3" class="col-sm-7 control-label">Amount To Be Paid*</label>
             <div class="col-sm-5">
@@ -287,14 +286,13 @@ $errormessage =$this->session->flashdata('error');
 					</div>
 			</div>
         </div>
+		
 		<div class="form-group" style="display:none;" id="cheque_number">
             <label for="inputEmail3" class="col-sm-7 control-label">Cheque Number*</label>
             <div class="col-sm-5">
-                <input type="text"  class="form-control" name="cheque_number" id="cheque_number_val" placeholder="Cheque Number" value="<?php echo @$bill['cheque_number']; ?>" >
+                <input type="text"  class="form-control" name="cheque_number" placeholder="Cheque Number" value="<?php echo @$bill['cheque_number']; ?>" >
             </div>
         </div>
-		
-		<!--pawan code end start -->
     <div class="form-group">
         <div class="col-xs-5 col-xs-offset-1">
             <button type="submit" class="btn btn-default ladda-button" data-style="expand-left"><span class="ladda-label"><?php echo isset($bill['BillId'])? 'Update':'Submit'; ?></span></button>
@@ -349,6 +347,7 @@ tax_2 = (tax_2*sub_total)/100;*/
 var grand_total = tax_1+tax_2+sub_total;
 
 $('#Total').val(grand_total.toFixed(2));
+
 changeBalanceLeft();
 }
 
@@ -394,9 +393,9 @@ function showChequeField(){
 }
 function hideChequeField(){
 	$('#cheque_number').hide();
-	$('#cheque_number_val').val("");
+	$('#cheque_number').val("");
 }
-
+//end
 window.onload = function() {
 var base_url = '<?php echo base_url(); ?>';
 $('.selectpicker').selectpicker();
@@ -556,17 +555,6 @@ $('.selectpicker').selectpicker();
                 }
             }
         },
-		AmountpaidValidators = {
-            row: '.col-sm-5',
-            validators: {
-                notEmpty: {
-                    message: 'The Amount to pay is required'
-                },
-                numeric: {
-                    message: 'The Amount to pay must be a numeric number'
-                }
-            }
-        },
         bookIndex = 0;
 
     $('#product_add_form')
@@ -592,7 +580,6 @@ $('.selectpicker').selectpicker();
                 'Tax_2_Amount': Tax_2_Validators,
                 'Tax_1_Amount': Tax_1_Validators,
                 'Total': grandtotalValidators,
-				'Amount_paid': AmountpaidValidators,
                 
 
             }
