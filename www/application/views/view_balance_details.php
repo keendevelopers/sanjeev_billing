@@ -56,6 +56,8 @@ $last_entery  = end($bill);
 							
 							<div class="row" style="display:none" id="cheque_number"><div class="col-md-5"><h4><b>Cheque Number*:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="cheque_number" id="cheque_number_val" placeholder="Cheque Number" value=""  /></div></h4></div>
 
+							<div class="row"><div class="col-md-5"><h4><b>Add Date:</b></h4></div><div class="col-md-7"><input type="text" id="added_date" class="form-control flatpickr" name="added_date" placeholder="Add Date"  value="<?php echo isset($bill['PurchasedOn'])? date('d-m-Y', strtotime($bill['PurchasedOn'])): ''; ?>"  ></div></div>
+
 						</div>
 
 						   <div class="row"><div class="col-md-5"></div><div class="col-md-7"><h4><button type="submit" class="btn btn-default ladda-button" data-style="expand-left"><span class="ladda-label">Update</span></div></h4></div></div>
@@ -71,6 +73,7 @@ $last_entery  = end($bill);
 			<?php } ?>
 
                 </div>
+				<script src="<?php echo base_url();?>assets/flatpickr.js"></script>
 <script>
 
 	function Left_balance(){

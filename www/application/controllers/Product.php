@@ -436,6 +436,7 @@ class Product extends CI_Controller
 			
             $PostData = $this->input->post();
             $this->form_validation->set_rules('new_pay', 'New Payment', 'required');
+			$this->form_validation->set_rules('added_date', 'Added Date', 'required');
             
             if ($this->form_validation->run() == false) {
                 
@@ -463,6 +464,7 @@ class Product extends CI_Controller
 							'cheque_number' =>  isset($_POST['cheque_number']) ? $_POST['cheque_number'] : "" ,
 							'modified_on'   =>  date('Y-m-d H:i:s'),
 							'created_on'    =>  date('Y-m-d H:i:s'),
+							'added_date'    =>  $_POST['added_date'],
 							'userId'        =>  $_SESSION['admin_id'],
 						);
 				
@@ -515,9 +517,9 @@ class Product extends CI_Controller
             $action .= '
              <button class="btn btn-danger btn-mini" onclick=del_stock_product(this,"' . $bill->BillId . '")><i class="fa fa-trash-o"></i></button>';
 			
-			$action .= '<a class="btn btn-info btn-mini" onclick=view_modal("' . base_url() . 'product/modal/view_balance_details/' . $bill->BillId . '")><i class="fa fa-eye"></i> </a>';
+			$action .= '<a class="btn btn-success btn-mini" onclick=view_modal("' . base_url() . 'product/modal/view_balance_details/' . $bill->BillId . '")><i class="fa fa-list-ul"></i> </a>';
 			
-			$action .= '<a class="btn btn-info btn-mini" onclick=view_modal("' . base_url() . 'product/modal/view_balance_details_log/' . $bill->BillId . '")><i class="fa fa-eye"></i> </a>';
+			$action .= '<a class="btn btn-info btn-warning btn-mini" onclick=view_modal("' . base_url() . 'product/modal/view_balance_details_log/' . $bill->BillId . '")><i class="fa fa-align-left"></i> </a>';
             
 
             $row[] = $action;
@@ -535,6 +537,49 @@ class Product extends CI_Controller
         echo json_encode($output);
     }
 
+    public function product_list_detail_ajax()
+    {
+        $list = $this->product_list->get_datatables();
+        $data = array();
+        $no   = $_POST['start'];
+        foreach ($list as $bill) {
+            $no++;
+            $row   = array();
+            $row[] = $no;
+            /* $row[] = '<Strong>Model: </strong>' . $customers->model . '<br><Strong>Maker: </strong>' . $customers->make . '<br><Strong>Power: </strong>' . $customers->horse_power;*/
+            $row[]  = $bill->BillNo;
+            $row[]  = $bill->BillBy;
+            $row[]  = '(<i class="fa fa-inr"></i>) '.$bill->SubTotal;
+            $row[]  = $bill->Tax_1 . ': (<i class="fa fa-inr"></i>) '.$bill->Tax_1_Amount.'<br>' . $bill->Tax_2.': (<i class="fa fa-inr"></i>) '.$bill->Tax_2_Amount;
+            $row[]  = '(<i class="fa fa-inr"></i>) '.$bill->Total;
+            $row[]  = date('d-M-Y', strtotime($bill->PurchasedOn));
+            $action = '';
+
+            $action .= '<a class="btn btn-info btn-mini" onclick=view_modal("' . base_url() . 'product/modal/view_purchased_bill/' . $bill->BillId . '")><i class="fa fa-eye"></i> </a>
+            <a class="btn btn-primary btn-mini" href="' . base_url() . 'product/edit_products/' . $bill->BillId . '")><i class="fa fa-pencil-square-o"></i></a>';
+
+            $action .= '
+             <button class="btn btn-danger btn-mini" onclick=del_stock_product(this,"' . $bill->BillId . '")><i class="fa fa-trash-o"></i></button>';
+			
+			$action .= '<a class="btn btn-success btn-mini" onclick=view_modal("' . base_url() . 'product/modal/view_balance_details/' . $bill->BillId . '")><i class="fa fa-list-ul"></i> </a>';
+			
+			$action .= '<a class="btn btn-info btn-warning btn-mini" onclick=view_modal("' . base_url() . 'product/modal/view_balance_details_log/' . $bill->BillId . '")><i class="fa fa-align-left"></i> </a>';
+            
+
+            $row[] = $action;
+            // $row[] = $customers->country;
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw"            => $_POST['draw'],
+            "recordsTotal"    => $this->product_list->count_all(),
+            "recordsFiltered" => $this->product_list->count_filtered(),
+            "data"            => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+    }
     public function edit_products($billid)
     {
         $data = array();

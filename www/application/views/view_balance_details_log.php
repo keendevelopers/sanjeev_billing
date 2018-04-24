@@ -47,8 +47,10 @@ $last_entery  = end($bill);
                                     <td scope="row"><?php echo $pro['created_on']; ?></td>
                                     <td><?php echo $pro['amount_paid']; ?></td>
                                     <td><?php echo $pro['balance']; ?></td>
+									<td ><button class="btn btn-info btn-mini" amout_paid="<?php echo $pro['amount_paid']; ?>" ledger_id="<?php echo $pro['ledger_id'];?>" onclick="del_stock_product_balnce(this);"><i class="fa fa-pencil-square-o"></i></button>
+									</td>
 									<td ><button class="btn btn-danger btn-mini" amout_paid="<?php echo $pro['amount_paid']; ?>" ledger_id="<?php echo $pro['ledger_id'];?>" onclick="del_stock_product_balnce(this);"><i class="fa fa-trash-o"></i></button>
-			</td>
+									</td>
                                     
                                   </tr>
                                 <?php } ?>
@@ -75,28 +77,15 @@ $last_entery  = end($bill);
 <script>
 function del_stock_product_balnce(obj)
     {
-		 alert($(obj).attr('amout_paid'));
-        header('Content-Type: application/json');
-            if ($this->db->where('BillId', $_POST['id'])->update('buyed_product_bill', $da)) {
-            $products = $this->db->where('ledger', $_POST['id'])->get('buyed_product')->result_array();
-
-            foreach ($products as $key => $value) {
-                $this->db->query("UPDATE product_info SET AvailQuantity = AvailQuantity - '" . $value['BP_Qunatity_Total'] . "' WHERE P_Id = '" . $value['P_Id'] . "'");
-            }
-
-            $data = array(
-                'result'  => 'success',
-                'message' => 'Successfully Deleted.',
-                'title'   => 'Successfull',
-            );
-        } else {
-            $data = array(
-                'result'  => 'danger',
-                'message' => 'Unable to delete this stock bill.',
-                'title'   => 'Error',
-            );
-        }
-        echo json_encode($data);
+		 var amount_paid = $(obj).attr('amout_paid');
+		   $.ajax({
+			type:"POST",
+			url:"<?php echo base_url(); ?>controller_name/",
+			data:{Amount_paid:amount_paid},
+			success:function (data) {
+			alert('test');
+			}
+			});
     }
 
 
