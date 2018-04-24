@@ -2,6 +2,7 @@
 
 
 $bill          = $this->db->where(array('bill_id' => $parm,'ledger_type' => 'sell'))->get('ledger')->result_array();
+
 // echo '<pre>';
     // print_r($bill);
     // echo '</pre>';die();

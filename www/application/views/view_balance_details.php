@@ -13,6 +13,7 @@ $last_entery  = end($bill);
  ?>
 
 <div class="col-xs-12 col-md-12 col-lg-12 pull-left">
+<?php if (isset($last_entery['bill_id']) && !empty($last_entery['bill_id'])) { ?>
 				<form id="pay_remain_balance" method="post" action="<?php echo base_url("product/add_remain_balance"); ?>">
                     <div class="panel panel-default height">
 
@@ -61,6 +62,13 @@ $last_entery  = end($bill);
          
                     </div>
 				</form>	
+				<?php } else { ?>
+			
+				<div class="panel panel-default height">
+
+							<div class="panel-heading text-center">No Record Found</div>
+				</div>
+			<?php } ?>
 
                 </div>
 <script>

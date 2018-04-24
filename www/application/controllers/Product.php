@@ -385,7 +385,7 @@ class Product extends CI_Controller
 							'amount_paid'   =>  $_POST['Amount_paid'] ? $_POST['Amount_paid'] : "",
 							'balance'       =>  $_POST['Amount_left'] ? $_POST['Amount_left'] : "",
 							'payment_type'  =>  $_POST['payment_type'] ? $_POST['payment_type'] : "",
-							'cheque_number' =>  isset($_POST['cheque_number']) ? $_POST['cheque_number'] : "" ,
+							'cheque_number' =>  $_POST['cheque_number'] ? $_POST['cheque_number'] : "" ,
 							'modified_on'   =>  date('Y-m-d H:i:s'),
 							'created_on'    =>  date('Y-m-d H:i:s'),
 							'userId'        =>  $_SESSION['admin_id'],
@@ -516,6 +516,8 @@ class Product extends CI_Controller
              <button class="btn btn-danger btn-mini" onclick=del_stock_product(this,"' . $bill->BillId . '")><i class="fa fa-trash-o"></i></button>';
 			
 			$action .= '<a class="btn btn-info btn-mini" onclick=view_modal("' . base_url() . 'product/modal/view_balance_details/' . $bill->BillId . '")><i class="fa fa-eye"></i> </a>';
+			
+			$action .= '<a class="btn btn-info btn-mini" onclick=view_modal("' . base_url() . 'product/modal/view_balance_details_log/' . $bill->BillId . '")><i class="fa fa-eye"></i> </a>';
             
 
             $row[] = $action;
