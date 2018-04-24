@@ -274,7 +274,7 @@ class Product extends CI_Controller
             $this->form_validation->set_rules('book_0_P_Id', 'product', 'required');
             $this->form_validation->set_rules('book_0_BP_Price', 'product price', 'required');
             $this->form_validation->set_rules('Total', 'total', 'required');
-			$this->form_validation->set_rules('Amount_paid', 'Amount Paid', 'required');
+			
 
             if (isset($PostData['BillId']) && !empty($PostData['BillId'])) {
                 $original = $this->db->query("SELECT BillNo FROM buyed_product_bill WHERE BillId = " . $PostData['BillId'])->row()->BillNo;
@@ -284,6 +284,7 @@ class Product extends CI_Controller
                     $is_unique_engine = '';
                 }
             } else {
+                $this->form_validation->set_rules('Amount_paid', 'Amount Paid', 'required');
                 $this->form_validation->set_rules('BillNo', 'bill no', 'required|is_unique[buyed_product_bill.BillNo]', array('is_unique' => 'This %s is already exists.'));
             }
 
@@ -317,6 +318,7 @@ class Product extends CI_Controller
                 );
 
                 if (isset($PostData['BillId']) && !empty($PostData['BillId'])) {
+                    $old_bill_details = $this->db->where('BillId', $PostData['BillId'])->get('buyed_product_bill')->row_array();
                     if ($this->db->where('BillId', $PostData['BillId'])->update('buyed_product_bill', $bill)) {
                         $select_data = $this->db->where('BillId', $PostData['BillId'])->get('buyed_product')->result_array();
                         foreach ($select_data as $key => $value) {
@@ -339,6 +341,21 @@ class Product extends CI_Controller
                                 $this->db->insert('buyed_product', $bill_product);
                                 $this->db->query("UPDATE product_info SET AvailQuantity = AvailQuantity + ('" . $PostData['book_' . $i . '_BP_Qunatity_Total'] . "') WHERE P_Id = '" . $PostData['book_' . $i . '_P_Id'] . "'");
                             }
+                        }
+                    
+                        if($old_bill_details['Total'] != $PostData['Total']){
+                            $plus = $PostData['Total']-$old_bill_details['Total'];
+                            /*$this->db->where('Ledger_Id',$old_ledger['Ledger_Id'])
+                            ->set('Amount', 'Amount+'.$plus, FALSE)
+                            ->set('Description',$input['Description'])
+                            ->set('Balance','Balance+'.$plus,FALSE)      
+                            ->update('ledger');*/
+                            /*$this->db->where(array('Ledger_Id>'=>$old_ledger['Ledger_Id'],'Employee'=>$old_ledger['Employee']))
+                            ->set('Balance','Balance+'.$plus,FALSE)      
+                            ->update('ledger');*/
+                            $this->db->where(array('ledger_type'=>'buy','bill_id'=>$PostData['BillId']))
+                            ->set('balance','balance+'.$plus,FALSE)      
+                            ->update('ledger');
                         }
 
                         $data = array(

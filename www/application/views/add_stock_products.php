@@ -592,7 +592,7 @@ $('.selectpicker').selectpicker();
                 'Tax_2_Amount': Tax_2_Validators,
                 'Tax_1_Amount': Tax_1_Validators,
                 'Total': grandtotalValidators,
-				'Amount_paid': AmountpaidValidators,
+				//'Amount_paid': AmountpaidValidators,
                 
 
             }
