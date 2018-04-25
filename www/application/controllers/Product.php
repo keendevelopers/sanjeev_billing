@@ -407,6 +407,7 @@ class Product extends CI_Controller
 							'cheque_number' =>  $_POST['cheque_number'] ? $_POST['cheque_number'] : "" ,
 							'modified_on'   =>  date('Y-m-d H:i:s'),
 							'created_on'    =>  date('Y-m-d H:i:s'),
+                            'added_date'    =>  date('d-M-Y', strtotime($_POST('added_date'))),
 							'userId'        =>  $_SESSION['admin_id'],
 						);
 							

@@ -7,7 +7,8 @@
 <!-- ============================================================== -->
 <!-- Start right Content here -->
 <!-- ============================================================== -->
-
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <div class="content-page">
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
 <!-- Start content -->
@@ -70,7 +71,10 @@ Event Deleted Successfully
 <div class="card-box table-responsive">
  <a href="<?php echo base_url();?>product/add_products" title="Add Stock" class="btn btn-icon waves-effect btn-default waves-light" style="margin-bottom: 20px;"><i class="fa fa-plus"></i> Add Stock Products</a> 
 <a class="btn btn-icon waves-effect btn-primary waves-light" onclick="$('#show_filters').slideToggle();" style="margin-bottom: 20px;"><i class="fa fa-chevron-down" aria-hidden="true"></i> Show Filters </a>
-
+<div class="pull-right">
+<label>Quantity Type: </label>
+<input type="checkbox" checked data-toggle="toggle" data-on="All" data-off="Least" data-onstyle="success" data-offstyle="danger" title="Select Quantity" id="quantity_type">
+</div>
 <div id="show_filters" class="filter-div">
 
 <form id="invoice_filter">
@@ -174,7 +178,7 @@ $(document).ready(function() {
         "ajax": {
             "url": "<?php echo site_url('product/product_list_ajax')?>",
             "type": "POST",
-            "data": function(d){d.start_date=$('input[name="start_date"]').val(),d.end_date=$('input[name="end_date"]').val(),d.bill_no = $('#BillNo').val()},
+            "data": function(d){d.start_date=$('input[name="start_date"]').val(),d.end_date=$('input[name="end_date"]').val(),d.bill_no = $('#BillNo').val(),d.quantity_type=$('#quantity_type:checked').val()},
         },
 
         //Set column definition initialisation properties.
@@ -279,7 +283,9 @@ $('#datatable').DataTable().ajax.reload();
 $('#vehicletype').change(function(){
    $('#datatable').DataTable().ajax.reload(); 
 })
-
+$('#quantity_type').change(function(){
+    $('#datatable').DataTable().ajax.reload();
+})
 </script>
 <script>
 
