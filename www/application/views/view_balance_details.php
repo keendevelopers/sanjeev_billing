@@ -54,9 +54,21 @@ $last_entery  = end($bill);
 							   </h4>
 							</div>
 							
-							<div class="row" style="display:none" id="cheque_number"><div class="col-md-5"><h4><b>Cheque Number*:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="cheque_number" id="cheque_number_val" placeholder="Cheque Number" value=""  /></div></h4></div>
+							<div class="row" style="display:none" id="cheque_number">
+							    <div class="col-md-5"><h4><b>Cheque Number*:</b></h4>
+							</div>
+							<div class="col-md-7">
+							    <h4><input type="text"  class="form-control required" name="cheque_number" id="cheque_number_val" placeholder="Cheque Number" value=""  /></h4>
+							</div>
+							
+							 </div> 
 
-							<div class="row"><div class="col-md-5"><h4><b>Add Date:</b></h4></div><div class="col-md-7"><input type="text" id="added_date" class="form-control flatpickr" name="added_date" placeholder="Add Date"  value="<?php echo isset($bill['PurchasedOn'])? date('d-m-Y', strtotime($bill['PurchasedOn'])): ''; ?>"  ></div></div>
+							<div class="row">
+								<div class="col-md-5">
+									<h4><b>Date:</b></h4>
+								</div>
+							    <div class="col-md-7"><input type="text" id="added_date" class="form-control flatpickr" name="added_date" placeholder="Date"  value="<?php echo isset($bill['PurchasedOn'])? date('d-m-Y', strtotime($bill['PurchasedOn'])): ''; ?>"  >
+							    </div></div>
 
 						</div>
 
@@ -73,7 +85,23 @@ $last_entery  = end($bill);
 			<?php } ?>
 
                 </div>
-				<script src="<?php echo base_url();?>assets/flatpickr.js"></script>
+<!--  -->
+
+
+<script src="<?php echo base_url();?>assets/flatpickr.js"></script>
+<script type="text/javascript">
+  $(".flatpickr").flatpickr({dateFormat: "d-m-Y",});
+  $('.show_form').click(function(){
+    $('#main_div').hide('1000');
+    $('#add_inst').show('1000');
+  });
+  $('.close_toggle').click(function(){
+    $('#main_div').show('1000');
+    $('#add_inst').hide('1000');
+  });
+
+  </script>
+
 <script>
 
 	function Left_balance(){
