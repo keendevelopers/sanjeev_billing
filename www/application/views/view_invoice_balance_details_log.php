@@ -106,7 +106,7 @@ $(document).ready(function() {
 
     $('#year_sel, #theSelect').select2({ width: '100%' });
     //datatables
-    var bill_
+    var bill_id = $('#').val();
     table = $('#datatable').DataTable({ 
        
         "processing": true, //Feature control the processing indicator.
@@ -116,7 +116,7 @@ $(document).ready(function() {
         "ajax": {
             "url": "<?php echo site_url('product/product_list_detail_ajax')?>",
             "type": "POST",
-            "data": function(d){d.start_date=$('input[name="start_date"]').val(),d.end_date=$('input[name="end_date"]').val(),d.bill_no = $('#BillNo').val()},
+            "data": function(d){d.bill_id=bill_id},
         },
 
         //Set column definition initialisation properties.

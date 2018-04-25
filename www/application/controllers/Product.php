@@ -11,6 +11,8 @@ class Product extends CI_Controller
         parent::__construct();
         $this->load->model(array('admin_model', 'product_list'));
         $this->load->model(array('product_model'));
+        $this->load->model(array('balance_detail'));
+        
     }
 
 // Admin Login
@@ -554,34 +556,29 @@ class Product extends CI_Controller
         echo json_encode($output);
     }
 
-    public function product_list_detail_ajax()
+    public function product_list_detail_ajax($bill_id)
     {
-        $list = $this->product_list->get_datatables();
-        $data = array();
-        $no   = $_POST['start'];
+        $list = $this->balance_detail->get_datatables($bill_id);
+        echo '<pre>';
+            print_r($list);
+            echo '</pre>';die();
+                $data = array();
+       
         foreach ($list as $bill) {
-            $no++;
             $row   = array();
             $row[] = $no;
             /* $row[] = '<Strong>Model: </strong>' . $customers->model . '<br><Strong>Maker: </strong>' . $customers->make . '<br><Strong>Power: </strong>' . $customers->horse_power;*/
-            $row[]  = $bill->BillNo;
-            $row[]  = $bill->BillBy;
-            $row[]  = '(<i class="fa fa-inr"></i>) '.$bill->SubTotal;
-            $row[]  = $bill->Tax_1 . ': (<i class="fa fa-inr"></i>) '.$bill->Tax_1_Amount.'<br>' . $bill->Tax_2.': (<i class="fa fa-inr"></i>) '.$bill->Tax_2_Amount;
-            $row[]  = '(<i class="fa fa-inr"></i>) '.$bill->Total;
-            $row[]  = date('d-M-Y', strtotime($bill->PurchasedOn));
+            $row[]  = $bill->created_on;
+            $row[]  = $bill->amount_paid;
+            $row[]  = $bill->balance;
+
             $action = '';
 
-            $action .= '<a class="btn btn-info btn-mini" onclick=view_modal("' . base_url() . 'product/modal/view_purchased_bill/' . $bill->BillId . '")><i class="fa fa-eye"></i> </a>
-            <a class="btn btn-primary btn-mini" href="' . base_url() . 'product/edit_products/' . $bill->BillId . '")><i class="fa fa-pencil-square-o"></i></a>';
-
-            $action .= '
-             <button class="btn btn-danger btn-mini" onclick=del_stock_product(this,"' . $bill->BillId . '")><i class="fa fa-trash-o"></i></button>';
-			
-			$action .= '<a class="btn btn-success btn-mini" onclick=view_modal("' . base_url() . 'product/modal/view_balance_details/' . $bill->BillId . '")><i class="fa fa-list-ul"></i> </a>';
-			
-			$action .= '<a class="btn btn-info btn-warning btn-mini" onclick=view_modal("' . base_url() . 'product/modal/view_balance_details_log/' . $bill->BillId . '")><i class="fa fa-align-left"></i> </a>';
             
+            $action .= '
+             <button class="btn btn-danger btn-mini" onclick=del_stock_product(this,"' . $bill->bill_id . '")><i class="fa fa-trash-o"></i></button>';
+			
+			
 
             $row[] = $action;
             // $row[] = $customers->country;
@@ -664,7 +661,7 @@ class Product extends CI_Controller
         if ($_POST) {
             $product = $this->db->where('P_Id', $_POST['ProductId'])->get('product_info')->row_array();
             $qunt = ($_POST['AdjustmentPack']*$product['PerPack'])+$_POST['AdjustmentLoose'];
-/*print_r($qunt);die();*/
+            /*print_r($qunt);die();*/
                 $this->db->query("UPDATE product_info SET AvailQuantity = AvailQuantity + '" . $qunt. "' WHERE P_Id = '" . $_POST['ProductId'] . "'");
            
 
