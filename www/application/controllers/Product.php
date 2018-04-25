@@ -11,6 +11,8 @@ class Product extends CI_Controller
         parent::__construct();
         $this->load->model(array('admin_model', 'product_list'));
         $this->load->model(array('product_model'));
+        $this->load->model(array('balance_detail'));
+        
     }
 
 // Admin Login
@@ -453,6 +455,7 @@ class Product extends CI_Controller
 			
             $PostData = $this->input->post();
             $this->form_validation->set_rules('new_pay', 'New Payment', 'required');
+			$this->form_validation->set_rules('added_date', 'Added Date', 'required');
             
             if ($this->form_validation->run() == false) {
                 
@@ -480,6 +483,7 @@ class Product extends CI_Controller
 							'cheque_number' =>  isset($_POST['cheque_number']) ? $_POST['cheque_number'] : "" ,
 							'modified_on'   =>  date('Y-m-d H:i:s'),
 							'created_on'    =>  date('Y-m-d H:i:s'),
+							'added_date'    =>  $_POST['added_date'],
 							'userId'        =>  $_SESSION['admin_id'],
 						);
 				
@@ -532,9 +536,9 @@ class Product extends CI_Controller
             $action .= '
              <button class="btn btn-danger btn-mini" onclick=del_stock_product(this,"' . $bill->BillId . '")><i class="fa fa-trash-o"></i></button>';
 			
-			$action .= '<a class="btn btn-info btn-mini" onclick=view_modal("' . base_url() . 'product/modal/view_balance_details/' . $bill->BillId . '")><i class="fa fa-eye"></i> </a>';
+			$action .= '<a class="btn btn-success btn-mini" onclick=view_modal("' . base_url() . 'product/modal/view_balance_details/' . $bill->BillId . '")><i class="fa fa-list-ul"></i> </a>';
 			
-			$action .= '<a class="btn btn-info btn-mini" onclick=view_modal("' . base_url() . 'product/modal/view_balance_details_log/' . $bill->BillId . '")><i class="fa fa-eye"></i> </a>';
+			$action .= '<a class="btn btn-info btn-warning btn-mini" onclick=view_modal("' . base_url() . 'product/modal/view_balance_details_log/' . $bill->BillId . '")><i class="fa fa-align-left"></i> </a>';
             
 
             $row[] = $action;
@@ -552,6 +556,44 @@ class Product extends CI_Controller
         echo json_encode($output);
     }
 
+    public function product_list_detail_ajax($bill_id)
+    {
+        $list = $this->balance_detail->get_datatables($bill_id);
+        echo '<pre>';
+            print_r($list);
+            echo '</pre>';die();
+                $data = array();
+       
+        foreach ($list as $bill) {
+            $row   = array();
+            $row[] = $no;
+            /* $row[] = '<Strong>Model: </strong>' . $customers->model . '<br><Strong>Maker: </strong>' . $customers->make . '<br><Strong>Power: </strong>' . $customers->horse_power;*/
+            $row[]  = $bill->created_on;
+            $row[]  = $bill->amount_paid;
+            $row[]  = $bill->balance;
+
+            $action = '';
+
+            
+            $action .= '
+             <button class="btn btn-danger btn-mini" onclick=del_stock_product(this,"' . $bill->bill_id . '")><i class="fa fa-trash-o"></i></button>';
+			
+			
+
+            $row[] = $action;
+            // $row[] = $customers->country;
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw"            => $_POST['draw'],
+            "recordsTotal"    => $this->product_list->count_all(),
+            "recordsFiltered" => $this->product_list->count_filtered(),
+            "data"            => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+    }
     public function edit_products($billid)
     {
         $data = array();
@@ -619,7 +661,7 @@ class Product extends CI_Controller
         if ($_POST) {
             $product = $this->db->where('P_Id', $_POST['ProductId'])->get('product_info')->row_array();
             $qunt = ($_POST['AdjustmentPack']*$product['PerPack'])+$_POST['AdjustmentLoose'];
-/*print_r($qunt);die();*/
+            /*print_r($qunt);die();*/
                 $this->db->query("UPDATE product_info SET AvailQuantity = AvailQuantity + '" . $qunt. "' WHERE P_Id = '" . $_POST['ProductId'] . "'");
            
 

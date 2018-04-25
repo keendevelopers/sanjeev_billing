@@ -59,6 +59,7 @@ $last_entery  = end($bill);
 							</div>
 							
 							<div class="row" style="display:none" id="cheque_number"><div class="col-md-5"><h4><b>Cheque Number*:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="cheque_number" id="cheque_number_val" placeholder="Cheque Number" value=""  /></div></h4></div>
+							<div class="row"><div class="col-md-5"><h4><b>Purchased On:</b></h4></div><div class="col-md-7"><h4><?php echo date('d M, Y',strtotime($bill['PurchasedOn'])); ?></h4></div></div>
 
 						</div>
 
