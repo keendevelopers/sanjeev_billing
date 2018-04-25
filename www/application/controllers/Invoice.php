@@ -156,7 +156,7 @@ class Invoice extends CI_Controller
 						$left_info = array(
 							'ledger_type'   =>  $_POST['ledger_type'],
 							'bill_id'       =>  $inv_id,
-							'total_amount'  =>  $_POST['Total'] ? $_POST['Total']: "",
+							'total_amount'  =>  $_POST['total'] ? $_POST['total']: "",
 							'amount_paid'   =>  $_POST['Amount_paid'] ? $_POST['Amount_paid'] : "",
 							'balance'       =>  $_POST['Amount_left'] ? $_POST['Amount_left'] : "",
 							'payment_type'  =>  $_POST['payment_type'] ? $_POST['payment_type'] : "",

@@ -93,8 +93,8 @@ body{
                     <th>#</th>
                     <th>Item</th>
                     <th class="text-center" style="width: 80px">HSN</th>
-                    <th class="text-center" >CGST</th>
-                    <th class="text-center" >SGST</th>
+                    <!-- <th class="text-center" >CGST</th>
+                    <th class="text-center" >SGST</th> -->
                     <th class="text-center" style="width: 70px">Price</th>
                     <th class="text-center" style="width: 70px">Pack</th>
                     <th class="text-center" style="width: 50px">Qnt</th>
@@ -111,8 +111,8 @@ body{
                     </td>
                     
                     <td class="text-center"><?php echo $value['HSNCode']; ?></td>
-                    <td class="text-center"><?php echo $value['IP_Tax_1']; ?>%</td>
-                    <td class="text-center"><?php echo $value['IP_Tax_2']; ?>%</td>
+                    <!-- <td class="text-center"><?php echo $value['IP_Tax_1']; ?>%</td>
+                    <td class="text-center"><?php echo $value['IP_Tax_2']; ?>%</td> -->
                     <td class="text-center">&#8377; <?php echo $value['IP_Price']; ?></td>
                     
                    <?php 
@@ -139,7 +139,7 @@ body{
                 </tr>
                 <?php } ?>
                 <tr>
-                    <td colspan="6" class="payment-method1 text-left">
+                    <td colspan="4" class="payment-method1 text-left">
                         <p>Amount In Words (&#8377;): <?php echo $number; ?></p>
                     </td>
                     <td class="text-right kd-margin" colspan="3">
@@ -150,21 +150,21 @@ body{
 
                         <p>Sub Total</p>
                         
-                        <?php if($details['Tax_1'] == 'vat-12'){ ?>
+                       <!--  <?php if($details['Tax_1'] == 'vat-12'){ ?>
                         <p>Tax (<?php echo ucfirst($details['Tax_1']); ?>%)</p>
                         <?php } else { ?>
                         <p><?php echo ucfirst($details['Tax_1']); ?>%</p>
                         <?php } ?>
                         <?php if($details['Tax_2'] !== ''): ?>
                         <p><?php echo ucfirst($details['Tax_2']); ?>%</p>
-                        <?php endif;?>
+                        <?php endif;?> -->
 
                         <?php if($details['OfferType'] == 'TotalBill'){ ?>
                             <p><?php echo $details['OfferTitle']; ?></p>
                         <?php } ?>
-                        <?php if(@$details['labour'] != '0.00'){ ?>
+                        <!-- <?php if(@$details['labour'] != '0.00'){ ?>
                             <p>Labour Charges</p>
-                        <?php } ?>
+                        <?php } ?> -->
                         <p><strong>GRAND TOTAL</strong></p>
                     </td>
                     <td class="text-center kd-margin">
