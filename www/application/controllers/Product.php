@@ -540,6 +540,71 @@ class Product extends CI_Controller
 		}
 	}
 	
+
+    public function update_paid_amount_entry(){
+        $data = array();
+        $auth = checkAdminLogin();
+        if ($auth == 1) {
+            
+            $PostData = $this->input->post();
+            $this->form_validation->set_rules('amount_paid_edit', 'paid amount', 'required');
+            $this->form_validation->set_rules('paid_date', 'paid Date', 'required');
+            
+            if ($this->form_validation->run() == false) {
+                
+                $error = $this->form_validation->error_array();
+                foreach ($error as $key => $value) {
+                    $error = $value;
+                }
+
+                $data = array(
+                    'result'  => 'danger',
+                    'message' => $error,
+                    'title'   => 'Error',
+                );
+                echo json_encode($data);
+                exit;
+            } else {
+                
+                $left_info = array(
+                            'amount_paid'   =>  $_POST['amount_paid_edit'] ? $_POST['amount_paid_edit'] : "0",
+                            'modified_on'   =>  date('Y-m-d H:i:s'),
+                            'added_date'    =>  $_POST['amount_paid_edit'],
+                        );
+                $old_entry = $this->db->where('ledger_id',$_POST['ledger_id'])->get('ledger')->row_array();
+                if ($this->db->where('ledger_id',$_POST['ledger_id'])->update('ledger', $left_info)) {
+
+                    $plus = $_POST['amount_paid_edit']-$old_entry['amount_paid'];
+                    $this->db->where(array('ledger_id>'=>$_POST['ledger_id'],'bill_id'=>$old_entry['bill_id']))
+                            ->set('balance','balance+'.$plus,FALSE)      
+                            ->update('ledger');
+
+                    $data = array(
+                        'result'  => 'success',
+                        'message' => 'Details added successfully!',
+                        'title'   => 'Successfull',
+                    );
+                    if(isset($_POST['mark_complete'])){
+                        $this->db->where('BillId',$_POST['bill_id'])->update('buyed_product_bill',array('is_complete'=>'1'));
+                    }
+                    /*redirect('product/manage_stock');
+                    header("Refresh:0");*/
+                    echo json_encode($data);
+                    exit;
+                } else {
+                    $data = array(
+                        'result'  => 'danger',
+                        'message' => 'Unable to add details!',
+                        'title'   => 'Error',
+                    );
+                    echo json_encode($data);
+                    exit;
+                }
+            }
+
+        }
+    }
+
     public function product_list_ajax()
     {
         $list = $this->product_list->get_datatables();

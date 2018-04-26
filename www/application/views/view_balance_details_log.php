@@ -32,9 +32,10 @@ $last_entery  = end($bill);
                             <table class="table" id="actual_all_data" style"display:block:">
                                 <thead>
                                   <tr>
-                                    <th>Paid Date</th>
-                                    <th>Amount Paid</th>
-                                    <th>Amount Left</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Type</th>
+                                    <th>Balance</th>
                                     <th>Action</th>
                                     
                                   </tr>
@@ -43,10 +44,11 @@ $last_entery  = end($bill);
 									<?php foreach ($bill as $key => $pro) { ?>
 									
 									  <tr>
-										<td scope="row"><?php echo $pro['created_on']; ?></td>
+										<td scope="row"><?php echo date('d M, Y', strtotime($pro['created_on'])); ?></td>
 										<td><?php echo $pro['amount_paid']; ?></td>
+										<td><?php echo ($pro['payment_type']); echo $pro['payment_type']=='cheque'? '</br><b>'.$pro['cheque_number'].'</b>':'';?></td><!--  echo $pro['payment_type']=='cheque'? '</br><b>'.$pro['cheque_number'].'</b>':''; -->
 										<td><?php echo $pro['balance']; ?></td>
-										<td><button class="btn btn-info btn-mini" style="font-size:12px;" amount_paid="<?php echo $pro['amount_paid'] ?>" balance="<?php echo $pro['balance'] ?>" paid_date="<?php echo $last_entery['created_on'] ?>" onclick="hide_all_data(this)"><i class="fa fa-pencil-square-o"></i></button>
+										<td><button class="btn btn-info btn-mini" style="font-size:12px;" amount_paid="<?php echo $pro['amount_paid'] ?>" ledger_id="<?php echo $pro['ledger_id'] ?>" paid_date="<?php echo $last_entery['created_on'] ?>" onclick="hide_all_data(this)"><i class="fa fa-pencil-square-o"></i></button>
 										  <button class="btn btn-danger btn-mini" style="font-size:12px;" onclick=del_stock_product_balnce("'<?php echo $pro['bill_id'];?>'")><i class="fa fa-trash-o"></i></button>
 										</td>
 										
@@ -57,14 +59,24 @@ $last_entery  = end($bill);
 							  <table class="table" id="edit_form" style"display:none:" >
                                 <div class="col-md-12">
 									<div id="edit_form" style="display:none;">
-											<form id="" method="post" >
+											<form id="update_paid_amounnt_form" method="post" >
 												<div class="row">
-													<div class="col-md-5"><h4><b>Last Paid Date:</b></h4></div><div class="col-md-7"><h5><input type="text"  class="form-control required" name="paid_date" id="paid_date"  value="" readonly /></h5></div></div>
-													
-													<div class="row"><div class="col-md-5"><h4><b>Balance:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="balance_edit" id="balance_edit"  value="" readonly /></h4></div></div>
-													<div class="row"><div class="col-md-5"><h4><b>Last Paid:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="amount_paid_edit" id="amount_paid_edit"  value=""  /></h4></div></div>
+													<input type="hidden" id="total_balance" name="total_balance" value="<?php echo $last_entery['balance']; ?>"/>
+													<input type="hidden" id="ledger_id" name="ledger_id" />
+													<div class="col-md-5"><h4><b>Paid Date:</b></h4></div><div class="col-md-7"><h5><input type="text"  class="form-control required flatpickr" name="paid_date" id="paid_date"  value="" readonly /></h5></div></div>
+
+													<div class="row"><div class="col-md-5"><h4><b>Paid Amount:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="amount_paid_edit" id="amount_paid_edit"  value=""  /></h4></div></div>
 												
-												 <div class="row"><div class="col-md-5"></div><div class="col-md-7"><h4><button type="submit" class="btn btn-default ladda-button" data-style="expand-left"><span class="ladda-label">Update</span></div></h4></div></div>
+													<!-- <div class="row"><div class="col-md-5"><h4><b>Balance:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="balance_edit" id="balance_edit"  value="" readonly /></h4></div></div> -->
+
+												 <div class="row"><div class="col-md-5"></div><div class="col-md-7"><h4>
+
+
+												 	<button type="submit" value="Add Vehicle Info" class="btn btn-default waves-effect waves-light ladda-button" data-style="expand-left">
+											   		<span class="ladda-label">Update Details</span>
+											   	</button>
+
+												 
 												</div>												
 											</form>
 										</div>
@@ -89,7 +101,7 @@ $last_entery  = end($bill);
 
 <script>
 
-
+$(".flatpickr").flatpickr({dateFormat: "d-m-Y",});
 
 
 function hide_all_data(obj){
@@ -99,13 +111,77 @@ function hide_all_data(obj){
 	$('#edit_form').show();
 	
 	var paid_date = $(obj).attr('paid_date');
-	var balance = $(obj).attr('balance');
-	var amount_paid = $(obj).attr('amount_paid');
+	var ledger_id = $(obj).attr('ledger_id');
+	/*$('#paid_date').setDate(paid_date);*/
+	var balance = parseInt($('#total_balance').val());
+	var amount_paid = parseInt($(obj).attr('amount_paid'));
 	
 	
 	$('#paid_date').val(paid_date);
-	$('#balance_edit').val(balance);
+	/*$('#balance_edit').val(balance);*/
 	$('#amount_paid_edit').val(amount_paid);
+	$('#ledger_id').val(ledger_id);
+	$('#amount_paid_edit').attr('max',amount_paid+balance);
 	
 }
 </script>
+
+<script>
+
+
+  var base_url = '<?php echo base_url(); ?>';
+
+$("#update_paid_amounnt_form").validate({
+      submitHandler: function (form) {
+  var l = Ladda.create( document.querySelector( '.ladda-button' ) );
+        l.start();
+    var formData = new FormData($('#update_paid_amounnt_form')[0]);
+
+$.ajax({
+type:'POST',
+dataType:'json',
+url: base_url+"product/update_paid_amount_entry", 
+data: formData,
+contentType: false,
+processData: false,
+success:function(data){  
+  l.stop();
+if(data.result == 'unauth') {
+
+/*  window.location.replace(base_url+"Welcome");*/
+
+}else if(data.result == 'success'){
+   table.ajax.reload();
+    $('#myModal').modal('hide');
+    $('#product_add_form')[0].reset();
+    $.toaster({ priority : data.result, title : data.title, message : data.message});
+    /*  setInterval(function(){window.location.replace(base_url+"user");},3000);*/
+}
+else{
+  $.toaster({ priority : data.result, title : data.title, message : data.message});
+}
+},
+
+error: function(){
+ l.stop();
+$.toaster({ priority : 'danger', title : 'Error', message : 'Not Done!'});
+  return true;
+}
+
+});
+
+$('#PackingType').change(function(){
+  if($('#PackingType').val() == 'Custom'){
+    $('#PerPack_div').hide();
+    $('#PerPack').removeClass('required');
+    $('#PerPack').val('');
+  }else{
+    $('#PerPack_div').show();
+    $('#PerPack').addClass('required');
+  }
+})
+
+}
+});
+
+                </script>
