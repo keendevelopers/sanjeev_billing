@@ -11,7 +11,7 @@
 
   <link href="<?php echo base_url();?>assets/css/style.css" rel="stylesheet">
   <link href="<?php echo base_url();?>assets/css/style-responsive.css" rel="stylesheet">
-
+<?php $PROFILE =$this->admin_model->admin_profile(); ?>
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
   <script src="js/html5shiv.js"></script>
@@ -44,9 +44,9 @@ body{
                     <?php if($details['Tax_1'] == 'vat-12'){ ?>
                     <p>TIN No. 03121148079</p>
                     <?php } else { ?>
-                    <p style="font-size: x-small;">GSTIN. <?php echo GSTIN;?></p>
-                    <span style="font-size: x-small;"><?php echo DL_1;?></span><br/>
-                    <span style="font-size: x-small;"><?php echo DL_2;?></span>
+                    <p style="font-size: x-small;">GSTIN. <?php echo $PROFILE['GSTIN'];?></p>
+                    <span style="font-size: x-small;">PAN NO.<?php echo $PROFILE['PANCARD'];?></span><br/>
+                    <!-- <span style="font-size: x-small;"><?php echo DL_2;?></span> -->
                     <?php } ?>   
                     </div>
                     <div class="col-md-6 col-sm-6 col-xs-6 text-center">
@@ -55,10 +55,10 @@ body{
                     <?php } else { ?>
                     <h4 class="invoice-title" style="margin-bottom: 5px;font-size: small;">Tax invoice</h4>
                     <?php } ?>
-                        <p><span style="font-size: 20px"><b><?php echo FIRMNAME;?></b></span><br/>
-                            <?php echo FIRMAUTHORISED;?><br/>
-                            <b><?php echo FIRMADDRESS_1;?><br> <?php echo FIRMADDRESS_2;?></b><br/>
-                            Phone: <?php echo FIRMCONTACT_1;?> <?php //echo FIRMCONTACT_2;?></p>
+                        <p><span style="font-size: 25px"><b><?php echo $PROFILE['FIRMNAME'];?></b></span><br/>
+                            <!-- <?php echo $PROFILE['FIRMAUTHORISED'];?><br/> -->
+                            <b><?php echo $PROFILE['FIRMADDRESS_1'];?><!-- <br> <?php echo FIRMADDRESS_2;?> --></b><br/>
+                            Phone: <?php echo $PROFILE['FIRMCONTACT_1'];?> <?php //echo FIRMCONTACT_2;?></p>
                     </div>
                     <div class="col-md-3 col-sm-3 col-xs-3 text-right">
                     <img class="inv-logo" src="<?php echo base_url();?>assets/img/logo.png" alt="" style="width: 85px;"/>
@@ -75,7 +75,7 @@ body{
                             <!-- <h3 class="corporate-id"><span>To: </span><?php// echo $details['cust_name']?></h3> -->
                             <p><span>To: </span><?php echo $details['cust_name']; ?><span class="pull-right" >State Code: <?php echo $details['StateCode']; ?></span></p>
                             <p><span>Address: </span><?php echo $details['address']; ?></p>
-                            <p><span>Prescribed By: </span><?php echo $details['vehicle_details']; ?></p> 
+                            <!-- <p><span>Prescribed By: </span><?php echo $details['vehicle_details']; ?></p> --> 
                             <p><span>Contact: </span><?php echo $details['mobile']; ?></p>
                             <p><span>GSTIN: </span><?php echo $details['Biller_GST']; ?></p>
                         </div>
@@ -93,8 +93,8 @@ body{
                     <th>#</th>
                     <th>Item</th>
                     <th class="text-center" style="width: 80px">HSN</th>
-                    <th class="text-center" >CGST</th>
-                    <th class="text-center" >SGST</th>
+                    <!-- <th class="text-center" >CGST</th>
+                    <th class="text-center" >SGST</th> -->
                     <th class="text-center" style="width: 70px">Price</th>
                     <th class="text-center" style="width: 70px">Pack</th>
                     <th class="text-center" style="width: 50px">Qnt</th>
@@ -111,8 +111,8 @@ body{
                     </td>
                     
                     <td class="text-center"><?php echo $value['HSNCode']; ?></td>
-                    <td class="text-center"><?php echo $value['IP_Tax_1']; ?>%</td>
-                    <td class="text-center"><?php echo $value['IP_Tax_2']; ?>%</td>
+                    <!-- <td class="text-center"><?php echo $value['IP_Tax_1']; ?>%</td>
+                    <td class="text-center"><?php echo $value['IP_Tax_2']; ?>%</td> -->
                     <td class="text-center">&#8377; <?php echo $value['IP_Price']; ?></td>
                     
                    <?php 
@@ -139,7 +139,7 @@ body{
                 </tr>
                 <?php } ?>
                 <tr>
-                    <td colspan="6" class="payment-method1 text-left">
+                    <td colspan="4" class="payment-method1 text-left">
                         <p>Amount In Words (&#8377;): <?php echo $number; ?></p>
                     </td>
                     <td class="text-right kd-margin" colspan="3">
@@ -150,21 +150,21 @@ body{
 
                         <p>Sub Total</p>
                         
-                        <?php if($details['Tax_1'] == 'vat-12'){ ?>
+                       <!--  <?php if($details['Tax_1'] == 'vat-12'){ ?>
                         <p>Tax (<?php echo ucfirst($details['Tax_1']); ?>%)</p>
                         <?php } else { ?>
                         <p><?php echo ucfirst($details['Tax_1']); ?>%</p>
                         <?php } ?>
                         <?php if($details['Tax_2'] !== ''): ?>
                         <p><?php echo ucfirst($details['Tax_2']); ?>%</p>
-                        <?php endif;?>
+                        <?php endif;?> -->
 
                         <?php if($details['OfferType'] == 'TotalBill'){ ?>
                             <p><?php echo $details['OfferTitle']; ?></p>
                         <?php } ?>
-                        <?php if(@$details['labour'] != '0.00'){ ?>
+                        <!-- <?php if(@$details['labour'] != '0.00'){ ?>
                             <p>Labour Charges</p>
-                        <?php } ?>
+                        <?php } ?> -->
                         <p><strong>GRAND TOTAL</strong></p>
                     </td>
                     <td class="text-center kd-margin">
@@ -177,21 +177,21 @@ body{
 
                         <p>&#8377; <?php echo $details['sub_total']; ?></p>
 
-                        <p>&#8377; <?php echo $details['Tax_1_Amount']; ?></p>
+                       <!--  <p>&#8377; <?php echo $details['Tax_1_Amount']; ?></p>
 
                         <?php if($details['Tax_2'] !== ''): ?>
 
                         <p>&#8377; <?php echo $details['Tax_2_Amount']; ?></p>
-
+ -->
                          <?php endif;?>
                          
                          <?php if($details['OfferType'] == 'TotalBill'){ ?>
                             <p>- &#8377;<?php echo $details['OfferAmount']; ?></p>
                         <?php } ?>
 
-                        <?php if(@$details['labour'] != '0.00'){ ?>
+                       <!--  <?php if(@$details['labour'] != '0.00'){ ?>
                             <p>&#8377;<?php echo $details['labour']; ?></p>
-                        <?php } ?>
+                        <?php } ?> -->
                         
                         <p><strong>&#8377; <?php echo $details['total']; ?></strong></p>
                     </td>

@@ -35,8 +35,8 @@ $last_entery  = end($bill);
 
 
 						   <input type="hidden" id="ledger_type" class="form-control" name="ledger_type"  value="sell" >
-						   <div class="row"><div class="col-md-5"><h4><b>Balance Left:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="balance" id="balance"  value="<?php echo $last_entery['balance']; ?>" readonly /></h4></div></div>
-
+						   <div class="row"><div class="col-md-5"><h4><b>Outstanding Balance:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="balance" id="balance"  value="<?php echo $last_entery['balance']; ?>" readonly /></h4></div></div>
+						   <hr>
 						   <div class="row"><div class="col-md-5"><h4><b>New Pay*:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="new_pay" id="new_pay" placeholder="New Pay" value="" onkeyup="Left_balance()" /></div></h4></div>
 
 						   

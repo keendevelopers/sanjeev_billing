@@ -261,7 +261,7 @@ $errormessage =$this->session->flashdata('error');
 		<div class="form-group">
             <label for="inputEmail3" class="col-sm-7 control-label">Amount To Be Paid*</label>
             <div class="col-sm-5">
-                <input type="text" id="Amount_paid" class="form-control" name="Amount_paid" onkeyup="Left_balance(this)" placeholder="Amount Paid" value="<?php echo @$bill['amount_paid']; ?>" >
+                <input type="text" id="Amount_paid" class="form-control" name="Amount_paid" onkeyup="Left_balance(this)" placeholder="Amount Paid" >
             </div>
         </div>
 		<div class="form-group">
@@ -349,9 +349,10 @@ tax_2 = (tax_2*sub_total)/100;*/
 var grand_total = tax_1+tax_2+sub_total;
 
 $('#Total').val(grand_total.toFixed(2));
+$('#Amount_paid').val(grand_total.toFixed(2));
+$('#Amount_paid').attr('max',grand_total.toFixed(2));
 changeBalanceLeft();
 }
-
 function get_per_pack(obj){
   var id = $(obj).data('id');
 
@@ -559,9 +560,9 @@ $('.selectpicker').selectpicker();
 		AmountpaidValidators = {
             row: '.col-sm-5',
             validators: {
-                notEmpty: {
+                /*notEmpty: {
                     message: 'The Amount to pay is required'
-                },
+                },*/
                 numeric: {
                     message: 'The Amount to pay must be a numeric number'
                 }
@@ -592,7 +593,7 @@ $('.selectpicker').selectpicker();
                 'Tax_2_Amount': Tax_2_Validators,
                 'Tax_1_Amount': Tax_1_Validators,
                 'Total': grandtotalValidators,
-				//'Amount_paid': AmountpaidValidators,
+				'Amount_paid': AmountpaidValidators,
                 
 
             }
