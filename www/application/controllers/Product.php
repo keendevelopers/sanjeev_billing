@@ -494,11 +494,10 @@ class Product extends CI_Controller
                         'message' => 'Details added successfully!',
                         'title'   => 'Successfull',
                     );
-					
-					redirect('product/manage_stock');
-					// header("Refresh:0");
-                    // echo json_encode($data);
-                    // exit;
+					/*redirect('product/manage_stock');
+					header("Refresh:0");*/
+                    echo json_encode($data);
+                    exit;
                 } else {
                     $data = array(
                         'result'  => 'danger',
@@ -537,7 +536,7 @@ class Product extends CI_Controller
             $action .= '
              <button class="btn btn-danger btn-mini" onclick=del_stock_product(this,"' . $bill->BillId . '")><i class="fa fa-trash-o"></i></button>';
 			
-			$action .= '<a class="btn btn-success btn-mini" onclick=view_modal("' . base_url() . 'product/modal/view_balance_details/' . $bill->BillId . '")><i class="fa fa-list-ul"></i> </a>';
+			$action .= '<a class="btn btn-success btn-mini" title="Add New Entry" onclick=view_modal("' . base_url() . 'product/modal/view_balance_details/' . $bill->BillId . '")><i class="fa fa-money"></i> </a>';
 			
 			$action .= '<a class="btn btn-info btn-warning btn-mini" onclick=view_modal("' . base_url() . 'product/modal/view_balance_details_log/' . $bill->BillId . '")><i class="fa fa-align-left"></i> </a>';
             

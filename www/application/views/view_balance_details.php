@@ -31,9 +31,11 @@ $last_entery  = end($bill);
 
 
 						   <input type="hidden" id="ledger_type" class="form-control" name="ledger_type"  value="buy" >
-						   <div class="row"><div class="col-md-5"><h4><b>Balance Left:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="balance" id="balance"  value="<?php echo $last_entery['balance']; ?>" readonly /></h4></div></div>
+						   <div class="row"><div class="col-md-5"><h4><b>Outstanding Balance:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="balance" id="balance"  value="<?php echo $last_entery['balance']; ?>" readonly /></h4></div></div>
+						   <hr>
 
-						   <div class="row"><div class="col-md-5"><h4><b>New Pay*:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="new_pay" id="new_pay" placeholder="New Pay" value="" onkeyup="Left_balance()" /></div></h4></div>
+						   <div class="panel-heading text-center">New Entry Details</div>
+						   <div class="row"><div class="col-md-5"><h4><b>Amount*:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="new_pay" id="new_pay" placeholder="Amount To Be Paid" value="" onkeyup="Left_balance()" /></div></h4></div>
 
 						   
 						   <div class="row"><div class="col-md-5"><h4><b>Balance Left:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control" name="balance_left" id="balance_left" placeholder="Balance Left" value="" readonly /></div></h4></div>
@@ -67,12 +69,21 @@ $last_entery  = end($bill);
 								<div class="col-md-5">
 									<h4><b>Date:</b></h4>
 								</div>
-							    <div class="col-md-7"><input type="text" id="added_date" class="form-control flatpickr" name="added_date" placeholder="Date"  value="<?php echo isset($bill['PurchasedOn'])? date('d-m-Y', strtotime($bill['PurchasedOn'])): ''; ?>"  >
+							    <div class="col-md-7"><input type="text" id="added_date" class="form-control flatpickr required" name="added_date" placeholder="Date"  value="<?php echo isset($bill['PurchasedOn'])? date('d-m-Y', strtotime($bill['PurchasedOn'])): ''; ?>"  >
 							    </div></div>
 
 						</div>
 
-						   <div class="row"><div class="col-md-5"></div><div class="col-md-7"><h4><button type="submit" class="btn btn-default ladda-button" data-style="expand-left"><span class="ladda-label">Update</span></div></h4></div></div>
+						   	<div class="col-sm-offset-4 col-sm-8">
+						   <!-- 	<button type="submit" class="btn btn-default ladda-button" data-style="expand-left" data-dismiss="alert" aria-hidden="true"></button> -->
+
+						   	<button type="submit" value="Add Vehicle Info" class="btn btn-default waves-effect waves-light ladda-button" data-style="expand-left">
+						   		<span class="ladda-label">Update Details</span>
+						   	</button>
+
+						   	</div>
+						    
+					</div>
          
                     </div>
 				</form>	
@@ -120,38 +131,70 @@ $last_entery  = end($bill);
 		$('#cheque_number_val').val("");
 	}
 
-window.onload = function() {
-	alert('dede');
-var base_url = '<?php echo base_url(); ?>';
-$('.selectpicker').selectpicker();
-    var billnoValidators = {
-            row: '.col-sm-5',   // The title is placed inside a <div class="col-xs-4"> element
-            validators: {
-                notEmpty: {
-                    message: 'The bill no is required'
-                }
-            }
-        },
-        bookIndex = 0;
 
-    $('#pay_remain_balance')
-        .formValidation({
-            framework: 'bootstrap',
-            icon: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                'new_pay': billnoValidators,
-            }
-        })
-
-        
-        
-        
-
-       
-
-};
 </script>
+
+
+<script>
+
+ $("#QuantityType").change(function(){     
+    var value = $("#QuantityType option:selected").val();
+    $('#Quantity_type').text(value);
+});
+
+  var base_url = '<?php echo base_url(); ?>';
+
+$("#pay_remain_balance").validate({
+      submitHandler: function (form) {
+  var l = Ladda.create( document.querySelector( '.ladda-button' ) );
+        l.start();
+    var formData = new FormData($('#pay_remain_balance')[0]);
+
+$.ajax({
+type:'POST',
+dataType:'json',
+url: base_url+"product/add_remain_balance", 
+data: formData,
+contentType: false,
+processData: false,
+success:function(data){  
+  l.stop();
+if(data.result == 'unauth') {
+
+/*  window.location.replace(base_url+"Welcome");*/
+
+}else if(data.result == 'success'){
+   table.ajax.reload();
+    $('#myModal').modal('hide');
+    $('#product_add_form')[0].reset();
+    $.toaster({ priority : data.result, title : data.title, message : data.message});
+    /*  setInterval(function(){window.location.replace(base_url+"user");},3000);*/
+}
+else{
+  $.toaster({ priority : data.result, title : data.title, message : data.message});
+}
+},
+
+error: function(){
+ l.stop();
+$.toaster({ priority : 'danger', title : 'Error', message : 'Not Done!'});
+  return true;
+}
+
+});
+
+$('#PackingType').change(function(){
+  if($('#PackingType').val() == 'Custom'){
+    $('#PerPack_div').hide();
+    $('#PerPack').removeClass('required');
+    $('#PerPack').val('');
+  }else{
+    $('#PerPack_div').show();
+    $('#PerPack').addClass('required');
+  }
+})
+
+}
+});
+
+                </script>
