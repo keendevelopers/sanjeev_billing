@@ -32,14 +32,7 @@ $last_entery  = end($bill);
 
 						   <input type="hidden" id="ledger_type" class="form-control" name="ledger_type"  value="buy" >
 						   <div class="row"><div class="col-md-5"><h4><b>Outstanding Balance:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="balance" id="balance"  value="<?php echo $last_entery['balance']; ?>" readonly /></h4></div></div>
-						   <hr>
-
-						   <div class="panel-heading text-center">New Entry Details</div>
-						   <div class="row"><div class="col-md-5"><h4><b>Amount*:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="new_pay" id="new_pay" placeholder="Amount To Be Paid" value="" onkeyup="Left_balance()" /></div></h4></div>
-
-						   
-						   <div class="row"><div class="col-md-5"><h4><b>Balance Left:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control" name="balance_left" id="balance_left" placeholder="Balance Left" value="" readonly /></div></h4></div>
-
+						   <div class="row"><div class="col-md-5"><h4><b>Payment Type:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required"  value="<?php echo $last_entery['payment_type']; ?>" readonly /></h4></div></div>
 						   <?php if(isset($last_entery['cheque_number']) && !empty($last_entery['cheque_number'])){?>
 						   <div class="row"  >
 							    <div class="col-md-5"><h4><b>Cheque Number*:</b></h4>
@@ -48,6 +41,17 @@ $last_entery  = end($bill);
 							    <h4><input type="text"  class="form-control required"  readonly id="cheque_number_val" placeholder="Cheque Number" value="<?php echo $last_entery['cheque_number'] ?>" /></h4>
 							</div>
 						   <?php } ?>
+						   <hr>
+						   
+						   
+
+						   <div class="panel-heading text-center">New Entry Details</div>
+						   <div class="row"><div class="col-md-5"><h4><b>Amount*:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="new_pay" id="new_pay" placeholder="Amount To Be Paid" value="" onkeyup="Left_balance()" /></div></h4></div>
+
+						   
+						   <div class="row"><div class="col-md-5"><h4><b>Balance Left:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control" name="balance_left" id="balance_left" placeholder="Balance Left" value="" readonly /></div></h4></div>
+
+						   
 						   <div class="row"><div class="col-md-5">
 								<h4><b>Payment Type:</b></h4>
 						   </div>

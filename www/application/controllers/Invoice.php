@@ -112,6 +112,20 @@ class Invoice extends CI_Controller
                             }
                         }
 
+						if($old_bill_details['Total'] != $PostData['Total']){
+                            $plus = $PostData['Total']-$old_bill_details['Total'];
+                            /*$this->db->where('Ledger_Id',$old_ledger['Ledger_Id'])
+                            ->set('Amount', 'Amount+'.$plus, FALSE)
+                            ->set('Description',$input['Description'])
+                            ->set('Balance','Balance+'.$plus,FALSE)      
+                            ->update('ledger');*/
+                            /*$this->db->where(array('Ledger_Id>'=>$old_ledger['Ledger_Id'],'Employee'=>$old_ledger['Employee']))
+                            ->set('Balance','Balance+'.$plus,FALSE)      
+                            ->update('ledger');*/
+                            $this->db->where(array('ledger_type'=>'sell','bill_id'=>$PostData['inv_id']))
+                            ->set('balance','balance+'.$plus,FALSE)      
+                            ->update('ledger');
+                        }
                         $data = array(
                             'result'  => 'success',
                             'message' => 'Details updated successfully!',
@@ -156,13 +170,14 @@ class Invoice extends CI_Controller
 						$left_info = array(
 							'ledger_type'   =>  $_POST['ledger_type'],
 							'bill_id'       =>  $inv_id,
-							'total_amount'  =>  $_POST['total'] ? $_POST['total']: "",
+							'total_amount'  =>  $_POST['Total'] ? $_POST['Total']: "",
 							'amount_paid'   =>  $_POST['Amount_paid'] ? $_POST['Amount_paid'] : "",
 							'balance'       =>  $_POST['Amount_left'] ? $_POST['Amount_left'] : "",
 							'payment_type'  =>  $_POST['payment_type'] ? $_POST['payment_type'] : "",
-							'cheque_number' =>  isset($_POST['cheque_number']) ? $_POST['cheque_number'] : "" ,
+							'cheque_number' =>  $_POST['cheque_number'] ? $_POST['cheque_number'] : "" ,
 							'modified_on'   =>  date('Y-m-d H:i:s'),
 							'created_on'    =>  date('Y-m-d H:i:s'),
+                            'added_date'    =>  date('Y-m-d H:i:s'),
 							'userId'        =>  $_SESSION['admin_id'],
 						);
 							
