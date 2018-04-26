@@ -72,8 +72,8 @@ Event Deleted Successfully
  <a href="<?php echo base_url();?>product/add_products" title="Add Stock" class="btn btn-icon waves-effect btn-default waves-light" style="margin-bottom: 20px;"><i class="fa fa-plus"></i> Add Stock Products</a> 
 <a class="btn btn-icon waves-effect btn-primary waves-light" onclick="$('#show_filters').slideToggle();" style="margin-bottom: 20px;"><i class="fa fa-chevron-down" aria-hidden="true"></i> Show Filters </a>
 <div class="pull-right">
-<label>Quantity Type: </label>
-<input type="checkbox" checked data-toggle="toggle" data-on="All" data-off="Least" data-onstyle="success" data-offstyle="danger" title="Select Quantity" id="quantity_type">
+<label>Show Bills: </label>
+<input type="checkbox" data-toggle="toggle" data-on="Pending Balance" data-off="All Bills" data-onstyle="danger" data-offstyle="success" title="Select Quantity" id="quantity_type">
 </div>
 <div id="show_filters" class="filter-div">
 

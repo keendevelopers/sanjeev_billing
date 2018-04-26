@@ -30,6 +30,10 @@ class Product_list extends CI_Model {
             $this->db->where('BillNo',$_POST['bill_no']);
         }
 
+        if(isset($_POST['quantity_type']) && !$_POST['quantity_type'] == ''){
+            $this->db->where('is_complete','0');
+        }
+
         /*if(isset($_POST['QuantityType']) && !$_POST['QuantityType'] == ''){
             $this->db->where('QuantityType',$_POST['QuantityType']);
         }*/
