@@ -86,13 +86,10 @@ $last_entery  = end($bill);
 							<div class="row">
 								<div class="col-md-5">
 									<h4><b>Mark As Complete:</b></h4>
-								</div>
-<<<<<<< HEAD
-							    <div class="col-md-7"><input type="text" id="added_date" class="form-control flatpickr required" name="added_date" placeholder="Date"  value="<?php echo isset($bill['PurchasedOn'])? date('d-m-Y', strtotime($bill['PurchasedOn'])): ''; ?>"  >
-=======
+
 							    <div class="col-md-7"><input type="checkbox" id="mark_complete" class="form-control " name="mark_complete"  >
->>>>>>> 78a9455eb608c1068e206f0be499dd5ae5f2d8da
-							    </div></div>
+
+							    </div>
 
 						</div>
 
@@ -176,7 +173,7 @@ $.ajax({
 type:'POST',
 dataType:'json',
 url: base_url+"product/add_remain_balance", 
-data: formData,
+data: formData,
 contentType: false,
 processData: false,
 success:function(data){  
