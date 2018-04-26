@@ -1,7 +1,7 @@
 <?php
 
-// $bill          = $this->db->where(array('bill_id' => '14','ledger_type' => 'buy'))->get('ledger')->result_array();
-$bill          = $this->db->where(array('bill_id' => '4','ledger_type' => 'sell'))->get('ledger')->result_array();
+$bill          = $this->db->where(array('bill_id' => $parm,'ledger_type' => 'sell'))->get('ledger')->result_array();
+// $bill          = $this->db->where(array('bill_id' => '4','ledger_type' => 'sell'))->get('ledger')->result_array();
 // echo $this->db->last_query();die();
 // echo '<pre>';
     // print_r($bill);
@@ -18,7 +18,7 @@ $last_entery  = end($bill);
 
 <div class="col-xs-12 col-md-12 col-lg-12 pull-left">
 			<?php if (isset($last_entery['bill_id']) && !empty($last_entery['bill_id'])) { ?>
-				<form id="pay_remain_balance" method="post" action="<?php echo base_url("invoice/add_remain_balance"); ?>">
+				<form id="pay_remain_balance" method="post" action="<?php echo base_url("product/add_remain_balance"); ?>">
                     <div class="panel panel-default height">
 
                         <div class="panel-heading text-center">Remain Balance Details</div>
@@ -49,6 +49,13 @@ $last_entery  = end($bill);
 						   <hr>
 						   
 						   <div class="panel-heading text-center">New Entry Details</div>
+                             <div class="row">
+								<div class="col-md-5">
+									<h4><b>Date:</b></h4>
+								</div>
+							    <div class="col-md-7"><input type="text" id="added_date" class="form-control flatpickr required" name="added_date" placeholder="Date"  value="<?php echo isset($bill['PurchasedOn'])? date('d-m-Y', strtotime($bill['PurchasedOn'])): ''; ?>"  >
+							    </div>
+							</div>
 						   <div class="row"><div class="col-md-5"><h4><b>Amount*:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="new_pay" id="new_pay" placeholder="Amount To Be Paid" value="" onkeyup="Left_balance()" /></div></h4></div>
 						   
 						   <div class="row"><div class="col-md-5"><h4><b>Balance Left:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control" name="balance_left" id="balance_left" placeholder="Balance Left" value="" readonly /></div></h4></div>
@@ -70,7 +77,16 @@ $last_entery  = end($bill);
 							</div>
 							
 							<div class="row" style="display:none" id="cheque_number"><div class="col-md-5"><h4><b>Cheque Number*:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="cheque_number" id="cheque_number_val" placeholder="Cheque Number" value=""  /></div></h4></div>
-							<div class="row"><div class="col-md-5"><h4><b>Purchased On:</b></h4></div><div class="col-md-7"><h4><?php echo date('d M, Y',strtotime($bill['PurchasedOn'])); ?></h4></div></div>
+							<div class="row">
+								<div class="col-md-5">
+									<h4><b>Mark As Complete:</b></h4>
+								</div>
+
+							   
+							    <div class="col-md-7"><input type="checkbox" id="mark_complete" class="form-control " name="mark_complete"  >
+
+							    </div>
+							</div>
 
 						</div>
 

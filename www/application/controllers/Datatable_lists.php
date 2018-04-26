@@ -47,10 +47,10 @@ class Datatable_lists extends CI_Controller
             <button class="btn btn-danger ladda-button btn-mini mr-l-5 kd-margin-bottom" data-style="expand-left" data-id="' . $invoice->inv_id . '" id="cancel_inv_' . $invoice->inv_id . '" onclick=cancle_status("' . $invoice->inv_id . '")><span class="ladda-label"><i class="fa fa-times" title="Ca Invoice"></i></spaan></button>
             
 			<a class="btn btn-default btn-mini mr-l-5" target="_blank" href="' . base_url() . 'invoice/print_invoice/' . $invoice->inv_id . '" title="Print Invoice"><i class="fa fa-print"></i></a>
-            
-			<a class="btn btn-info btn-mini mr-l-5 kd-margin-bottom" onclick=view_modal("' . base_url() . 'product/modal/view_invoice_balance_details/' . $invoice->inv_id . '")><i class="fa fa-eye"></i> </a>
-
-			<a class="btn btn-info btn-mini mr-l-5 kd-margin-bottom" onclick=view_modal("' . base_url() . 'product/modal/view_invoice_balance_details/' . $invoice->inv_id . '")><i class="fa fa-eye"></i> </a>';
+           
+			<a class="btn btn-success btn-mini mr-l-5 kd-margin-bottom" onclick=view_modal("' . base_url() . 'product/modal/view_invoice_balance_details/' . $invoice->inv_id . '")><i class="fa fa-money"></i> </a>
+			
+			<a class="btn btn-info btn-mini mr-l-5 kd-margin-bottom" onclick=view_modal("' . base_url() . 'product/modal/view_invoice_balance_details_log/' . $invoice->inv_id . '")><i class="fa fa-align-left"></i> </a>';
 
 			} else {
                 $cancle  = '<button class="btn btn-info btn-mini mr-l-5 kd-margin-bottom" data-id="1"><i class="fa fa-ban""></i> Canceled</button>';
