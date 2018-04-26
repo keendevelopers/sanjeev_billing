@@ -35,7 +35,15 @@ $last_entery  = end($bill);
 						   <hr>
 
 						   <div class="panel-heading text-center">New Entry Details</div>
-						   <div class="row"><div class="col-md-5"><h4><b>Amount*:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="new_pay" id="new_pay" placeholder="Amount To Be Paid" value="" onkeyup="Left_balance()" /></div></h4></div>
+
+						   <div class="row">
+								<div class="col-md-5">
+									<h4><b>Date:</b></h4>
+								</div>
+							    <div class="col-md-7"><input type="text" id="added_date" class="form-control flatpickr required" name="added_date" placeholder="Date"  value="<?php echo isset($bill['PurchasedOn'])? date('d-m-Y', strtotime($bill['PurchasedOn'])): ''; ?>"  >
+							    </div></div>
+
+						   <div class="row"><div class="col-md-5"><h4><b>Amount*:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required digits" name="new_pay" id="new_pay" placeholder="Amount To Be Paid" value="" onkeyup="Left_balance()" /></div></h4></div>
 
 						   
 						   <div class="row"><div class="col-md-5"><h4><b>Balance Left:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control" name="balance_left" id="balance_left" placeholder="Balance Left" value="" readonly /></div></h4></div>
@@ -67,9 +75,9 @@ $last_entery  = end($bill);
 
 							<div class="row">
 								<div class="col-md-5">
-									<h4><b>Date:</b></h4>
+									<h4><b>Mark As Complete:</b></h4>
 								</div>
-							    <div class="col-md-7"><input type="text" id="added_date" class="form-control flatpickr required" name="added_date" placeholder="Date"  value="<?php echo isset($bill['PurchasedOn'])? date('d-m-Y', strtotime($bill['PurchasedOn'])): ''; ?>"  >
+							    <div class="col-md-7"><input type="checkbox" id="mark_complete" class="form-control " name="mark_complete"  >
 							    </div></div>
 
 						</div>
