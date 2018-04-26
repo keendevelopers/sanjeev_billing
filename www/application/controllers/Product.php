@@ -512,16 +512,23 @@ class Product extends CI_Controller
 							'added_date'    =>  $_POST['added_date'],
 							'userId'        =>  $_SESSION['admin_id'],
 						);
-				
+						
                 if ($this->db->insert('ledger', $left_info)) {
                     $data = array(
                         'result'  => 'success',
                         'message' => 'Details added successfully!',
                         'title'   => 'Successfull',
                     );
-                    if(isset($_POST['mark_complete'])){
+					if($_POST['ledger_type'] == 'buy'){
+						if(isset($_POST['mark_complete'])){
                         $this->db->where('BillId',$_POST['bill_id'])->update('buyed_product_bill',array('is_complete'=>'1'));
-                    }
+                        }
+					}else{
+						if(isset($_POST['mark_complete'])){
+                        $this->db->where('inv_id',$_POST['bill_id'])->update('invoice',array('is_complete'=>'1'));
+                        }
+					}
+                    
 					/*redirect('product/manage_stock');
 					header("Refresh:0");*/
                     echo json_encode($data);
@@ -563,9 +570,9 @@ class Product extends CI_Controller
 
             $action .= '
              <button class="btn btn-danger btn-mini" onclick=del_stock_product(this,"' . $bill->BillId . '")><i class="fa fa-trash-o"></i></button>';
-			if($bill->is_complete == '0'){
+			// if($bill->is_complete == '0'){
 			 $action .= '<a class="btn btn-success btn-mini" title="Add New Entry" onclick=view_modal("' . base_url() . 'product/modal/view_balance_details/' . $bill->BillId . '")><i class="fa fa-money"></i> </a>';
-			}
+			// }
 			$action .= '<a class="btn btn-info btn-warning btn-mini" onclick=view_modal("' . base_url() . 'product/modal/view_balance_details_log/' . $bill->BillId . '")><i class="fa fa-align-left"></i> </a>';
             
 

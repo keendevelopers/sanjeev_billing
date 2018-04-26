@@ -31,7 +31,7 @@ $last_entery  = end($bill);
 
 
 						   <input type="hidden" id="ledger_type" class="form-control" name="ledger_type"  value="buy" >
-						   <div class="row"><div class="col-md-5"><h4><b>Outstanding Balance:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="balance" id="balance"  value="<?php echo $last_entery['balance']; ?>" readonly /></h4></div></div>
+						   <div class="row"><div class="col-md-5"><h4><b>Outstanding Balance:</b></h4></div><diva class="col-md-7"><h4><input type="text"  class="form-control required" name="balance" id="balance"  value="<?php echo $last_entery['balance']; ?>" readonly /></h4></div></div>
 						   <div class="row"><div class="col-md-5"><h4><b>Payment Type:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required"  value="<?php echo $last_entery['payment_type']; ?>" readonly /></h4></div></div>
 						   <?php if(isset($last_entery['cheque_number']) && !empty($last_entery['cheque_number'])){?>
 						   <div class="row"  >
@@ -87,11 +87,10 @@ $last_entery  = end($bill);
 								<div class="col-md-5">
 									<h4><b>Mark As Complete:</b></h4>
 								</div>
-<<<<<<< HEAD
-							    <div class="col-md-7"><input type="text" id="added_date" class="form-control flatpickr required" name="added_date" placeholder="Date"  value="<?php echo isset($bill['PurchasedOn'])? date('d-m-Y', strtotime($bill['PurchasedOn'])): ''; ?>"  >
-=======
+
+							   
 							    <div class="col-md-7"><input type="checkbox" id="mark_complete" class="form-control " name="mark_complete"  >
->>>>>>> 78a9455eb608c1068e206f0be499dd5ae5f2d8da
+
 							    </div></div>
 
 						</div>
