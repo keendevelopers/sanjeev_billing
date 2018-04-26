@@ -1,8 +1,8 @@
 <?php
 
-
-$bill          = $this->db->where(array('bill_id' => $parm,'ledger_type' => 'sell'))->get('ledger')->result_array();
-
+// $bill          = $this->db->where(array('bill_id' => '14','ledger_type' => 'buy'))->get('ledger')->result_array();
+$bill          = $this->db->where(array('bill_id' => '4','ledger_type' => 'sell'))->get('ledger')->result_array();
+// echo $this->db->last_query();die();
 // echo '<pre>';
     // print_r($bill);
     // echo '</pre>';die();
@@ -18,7 +18,7 @@ $last_entery  = end($bill);
 
 <div class="col-xs-12 col-md-12 col-lg-12 pull-left">
 			<?php if (isset($last_entery['bill_id']) && !empty($last_entery['bill_id'])) { ?>
-				<form id="pay_remain_balance" method="post" action="<?php echo base_url("product/add_remain_balance"); ?>">
+				<form id="pay_remain_balance" method="post" action="<?php echo base_url("invoice/add_remain_balance"); ?>">
                     <div class="panel panel-default height">
 
                         <div class="panel-heading text-center">Remain Balance Details</div>
@@ -36,9 +36,20 @@ $last_entery  = end($bill);
 
 						   <input type="hidden" id="ledger_type" class="form-control" name="ledger_type"  value="sell" >
 						   <div class="row"><div class="col-md-5"><h4><b>Outstanding Balance:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="balance" id="balance"  value="<?php echo $last_entery['balance']; ?>" readonly /></h4></div></div>
+						   
+						   <div class="row"><div class="col-md-5"><h4><b>Payment Type:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required"  value="<?php echo $last_entery['payment_type']; ?>" readonly /></h4></div></div>
+						   <?php if(isset($last_entery['cheque_number']) && !empty($last_entery['cheque_number'])){?>
+						   <div class="row"  >
+							    <div class="col-md-5"><h4><b>Cheque Number*:</b></h4>
+							</div>
+							<div class="col-md-7">
+							    <h4><input type="text"  class="form-control required"  readonly id="cheque_number_val" placeholder="Cheque Number" value="<?php echo $last_entery['cheque_number'] ?>" /></h4>
+							</div>
+						   <?php } ?>
 						   <hr>
-						   <div class="row"><div class="col-md-5"><h4><b>New Pay*:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="new_pay" id="new_pay" placeholder="New Pay" value="" onkeyup="Left_balance()" /></div></h4></div>
-
+						   
+						   <div class="panel-heading text-center">New Entry Details</div>
+						   <div class="row"><div class="col-md-5"><h4><b>Amount*:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="new_pay" id="new_pay" placeholder="Amount To Be Paid" value="" onkeyup="Left_balance()" /></div></h4></div>
 						   
 						   <div class="row"><div class="col-md-5"><h4><b>Balance Left:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control" name="balance_left" id="balance_left" placeholder="Balance Left" value="" readonly /></div></h4></div>
 
@@ -85,6 +96,60 @@ $last_entery  = end($bill);
 		var left_balance = parseInt(balance)-parseInt(new_pay);
 		$('#balance_left').val(left_balance.toFixed(2));
 	}
+$("#pay_remain_balance").validate({
+      submitHandler: function (form) {
+  var l = Ladda.create( document.querySelector( '.ladda-button' ) );
+        l.start();
+    var formData = new FormData($('#pay_remain_balance')[0]);
+
+$.ajax({
+type:'POST',
+dataType:'json',
+url: base_url+"invoice/add_remain_balance", 
+data: formData,
+contentType: false,
+processData: false,
+success:function(data){  
+  l.stop();
+if(data.result == 'unauth') {
+
+/*  window.location.replace(base_url+"Welcome");*/
+
+}else if(data.result == 'success'){
+   table.ajax.reload();
+    $('#myModal').modal('hide');
+    $('#product_add_form')[0].reset();
+    $.toaster({ priority : data.result, title : data.title, message : data.message});
+    /*  setInterval(function(){window.location.replace(base_url+"user");},3000);*/
+}
+else{
+  $.toaster({ priority : data.result, title : data.title, message : data.message});
+}
+},
+
+error: function(){
+ l.stop();
+$.toaster({ priority : 'danger', title : 'Error', message : 'Not Done!'});
+  return true;
+}
+
+});
+
+$('#PackingType').change(function(){
+  if($('#PackingType').val() == 'Custom'){
+    $('#PerPack_div').hide();
+    $('#PerPack').removeClass('required');
+    $('#PerPack').val('');
+  }else{
+    $('#PerPack_div').show();
+    $('#PerPack').addClass('required');
+  }
+})
+
+}
+});
 
 
 </script>
+
+	

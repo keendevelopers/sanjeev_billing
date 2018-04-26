@@ -275,7 +275,7 @@ class Product extends CI_Controller
 
             $this->form_validation->set_rules('book_0_P_Id', 'product', 'required');
             $this->form_validation->set_rules('book_0_BP_Price', 'product price', 'required');
-            $this->form_validation->set_rules('Total', 'total', 'required');
+            $this->form_validation->set_rules('Total', 'Total', 'required');
 			
 
             if (isset($PostData['BillId']) && !empty($PostData['BillId'])) {
@@ -398,6 +398,25 @@ class Product extends CI_Controller
                                 $this->db->query("UPDATE product_info SET AvailQuantity = AvailQuantity + '" . $PostData['book_' . $i . '_BP_Qunatity_Total'] . "' WHERE P_Id = '" . $PostData['book_' . $i . '_P_Id'] . "'");
                             }
                         }
+
+			// To Insert Value in ledger table for information of left amount
+						
+		
+						// $left_info = array(
+							// 'ledger_type'   =>  $_POST['ledger_type'],
+							// 'bill_id'       =>  $BillId,
+							// 'total_amount'  =>  $_POST['Total'] ? $_POST['Total']: "",
+							// 'amount_paid'   =>  $_POST['Amount_paid'] ? $_POST['Amount_paid'] : "",
+							// 'balance'       =>  $_POST['Amount_left'] ? $_POST['Amount_left'] : "",
+							// 'payment_type'  =>  $_POST['payment_type'] ? $_POST['payment_type'] : "",
+							// 'cheque_number' =>  $_POST['cheque_number'] ? $_POST['cheque_number'] : "" ,
+							// 'modified_on'   =>  date('Y-m-d H:i:s'),
+							// 'created_on'    =>  date('Y-m-d H:i:s'),
+                            // 'added_date'    =>  date('Y-m-d H:i:s'),
+							// 'userId'        =>  $_SESSION['admin_id'],
+						// );
+							
+						// $this->db->insert('ledger', $left_info);
                         // To Insert Value in ledger table for information of left amount
                         $left_info = array(
                             'ledger_type'   =>  $_POST['ledger_type'],
@@ -417,6 +436,7 @@ class Product extends CI_Controller
                           
 
                         $this->db->insert('ledger', $left_info);
+
                         $data = array(
                             'result'  => 'success',
                             'message' => 'Details added successfully!',

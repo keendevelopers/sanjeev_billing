@@ -34,24 +34,7 @@ $last_entery  = end($bill);
 						    <!-- Table Starts From here -->
                            <div class="row card-box">
                            <div class="col-md-12">
-<!--  -->
-<table id="datatable" class="table table-striped display table-bordered">
-<thead>
-<tr>
-  <th>Paid Date</th>
-  <th>Amount Paid</th>
-  <th>Amount Left</th>
-  <th>Action</th> 
-</tr>
 
-</thead>
-<tbody>
-</tbody>
-</table>
-
-<!--  -->
-
-<!-- 
                            <table class="table">
                                 <thead>
                                   <tr>
