@@ -275,7 +275,7 @@ class Product extends CI_Controller
 
             $this->form_validation->set_rules('book_0_P_Id', 'product', 'required');
             $this->form_validation->set_rules('book_0_BP_Price', 'product price', 'required');
-            $this->form_validation->set_rules('Total', 'total', 'required');
+            $this->form_validation->set_rules('Total', 'Total', 'required');
 			
 
             if (isset($PostData['BillId']) && !empty($PostData['BillId'])) {
@@ -397,6 +397,8 @@ class Product extends CI_Controller
                             }
                         }
 						// To Insert Value in ledger table for information of left amount
+						
+		
 						$left_info = array(
 							'ledger_type'   =>  $_POST['ledger_type'],
 							'bill_id'       =>  $BillId,
@@ -407,7 +409,7 @@ class Product extends CI_Controller
 							'cheque_number' =>  $_POST['cheque_number'] ? $_POST['cheque_number'] : "" ,
 							'modified_on'   =>  date('Y-m-d H:i:s'),
 							'created_on'    =>  date('Y-m-d H:i:s'),
-                            'added_date'    =>  date('d-M-Y', strtotime($_POST('added_date'))),
+                            'added_date'    =>  date('Y-m-d H:i:s'),
 							'userId'        =>  $_SESSION['admin_id'],
 						);
 							
