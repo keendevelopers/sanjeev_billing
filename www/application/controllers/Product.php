@@ -317,7 +317,7 @@ class Product extends CI_Controller
                     'Total'       => $PostData['Total'],
                     'CreatedOn'   => $PostData['CreatedOn'],
                     'UserId'      => $this->session->userdata('admin_id'),
-                    'is_complete'   => $PostData['Amount_paid'] == $PostData['Total']? '1':'0',
+                    
                 );
 
                 if (isset($PostData['BillId']) && !empty($PostData['BillId'])) {
@@ -379,6 +379,8 @@ class Product extends CI_Controller
                         exit;
                     }
                 } else {
+                     $bill['is_complete'] = $PostData['Amount_paid'] == $PostData['Total']? '1':'0';
+
                     if ($this->db->insert('buyed_product_bill', $bill)) {
                         $BillId = $this->db->insert_id();
                         for ($i = 0; $i <= $PostData['item_count']; $i++) {
@@ -635,9 +637,9 @@ class Product extends CI_Controller
 
             $action .= '
              <button class="btn btn-danger btn-mini" onclick=del_stock_product(this,"' . $bill->BillId . '")><i class="fa fa-trash-o"></i></button>';
-			// if($bill->is_complete == '0'){
+			if($bill->is_complete == '0'){
 			 $action .= '<a class="btn btn-success btn-mini" title="Add New Entry" onclick=view_modal("' . base_url() . 'product/modal/view_balance_details/' . $bill->BillId . '")><i class="fa fa-money"></i> </a>';
-			// }
+			 }
 			$action .= '<a class="btn btn-info btn-warning btn-mini" onclick=view_modal("' . base_url() . 'product/modal/view_balance_details_log/' . $bill->BillId . '")><i class="fa fa-align-left"></i> </a>';
             
 

@@ -44,7 +44,10 @@ class Invoice extends CI_Controller
 
             $this->form_validation->set_rules('book_0_P_Id', 'product', 'required');
             $this->form_validation->set_rules('book_0_IP_Price', 'product price', 'required');
-			$this->form_validation->set_rules('Amount_paid', 'Amount Paid', 'required');
+            
+            if (isset($PostData['inv_id']) && empty($PostData['inv_id'])) {
+			 $this->form_validation->set_rules('Amount_paid', 'Amount Paid', 'required');
+            }
 
             if ($this->form_validation->run() == false) {
                 $error  = $this->form_validation->error_array();
@@ -145,6 +148,7 @@ class Invoice extends CI_Controller
                     }
                 } else {
                     $bill['invoice_no'] = $PostData['invoice_no'];
+                    $bill['is_complete'] = $PostData['Amount_paid'] == $PostData['total']? '1':'0';
                     if ($this->db->insert('invoice', $bill)) {
                         $inv_id = $this->db->insert_id();
                         for ($i = 0; $i <= $PostData['item_count']; $i++) {

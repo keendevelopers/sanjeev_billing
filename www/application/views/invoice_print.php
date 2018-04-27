@@ -61,7 +61,7 @@ body{
                             Phone: <?php echo $PROFILE['FIRMCONTACT_1'];?> <?php //echo FIRMCONTACT_2;?></p>
                     </div>
                     <div class="col-md-3 col-sm-3 col-xs-3 text-right">
-                    <img class="inv-logo" src="<?php echo base_url();?>assets/img/logo.png" alt="" style="width: 85px;"/>
+                    <!-- <img class="inv-logo" src="<?php echo base_url();?>assets/img/logo.png" alt="" style="width: 85px;"/> -->
                     </div>
 
                 </div>

@@ -40,7 +40,8 @@ margin-top: 15px !important;
 	display: none;
 }
 </style>
-
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <link href="<?php echo base_url();?>assets/plugins/custombox/dist/custombox.min.css" rel="stylesheet">
 <div class="content">
 <div class="container">
@@ -63,7 +64,13 @@ margin-top: 15px !important;
 <div class="card-box table-responsive">
 <a href="<?php echo base_url();?>invoice/recordadd" title="Add Record" class="btn btn-icon waves-effect btn-default waves-light" style="margin-bottom: 20px;"><i class="fa fa-file-text-o" aria-hidden="true"></i> Create Invoice</a>
 
+
 <a class="btn btn-icon waves-effect btn-primary waves-light" onclick="$('#show_filters').slideToggle();" style="margin-bottom: 20px;">Show Filters <i class="fa fa-chevron-down" aria-hidden="true"></i></a>
+
+<div class="pull-right">
+<label>Show Bills: </label>
+<input type="checkbox" data-toggle="toggle" data-on="Pending Balance" data-off="All Bills" data-onstyle="danger" data-offstyle="success" title="Select Quantity" id="quantity_type">
+</div>
 
 <div id="show_filters" class="filter-div">
 
@@ -174,7 +181,7 @@ table = $('#table').DataTable({
         "ajax": {
             "url": "<?php echo site_url('Datatable_lists/invoice_list')?>",
             "type": "POST",
-            "data": function(d){d.inv_id=$('input[name="inv_id"]').val(),d.start_date=$('input[name="start_date"]').val(),d.end_date=$('input[name="end_date"]').val(),d.withtotal = $('input[name="withtotal"]').prop('checked'),d.v_id = $('#theSelect').val()}, //,d.tax_name=$('#tax_name').val()
+            "data": function(d){d.inv_id=$('input[name="inv_id"]').val(),d.start_date=$('input[name="start_date"]').val(),d.end_date=$('input[name="end_date"]').val(),d.withtotal = $('input[name="withtotal"]').prop('checked'),d.v_id = $('#theSelect').val(),d.quantity_type=$('#quantity_type:checked').val()}, //,d.tax_name=$('#tax_name').val()
          /*   "dataSrc" : function (json) {
           $('#total_bill_amount').text(data.bills_total);
         }*/
@@ -188,7 +195,13 @@ table = $('#table').DataTable({
         ],
       
     });
+
+
 } );
+$('#quantity_type').change(function(){
+    $('#table').DataTable().ajax.reload();
+})
+
 
 function cancle_status(id){
 var r = confirm("Are you sure to cancel this Invoice?");
@@ -224,6 +237,11 @@ if($('input[name="withtotal"]').prop('checked') == true){
 	$('#billtotal').hide();
 }
 $('#table').DataTable().ajax.reload();
+
+
+
 })
+
+
 </script>
 

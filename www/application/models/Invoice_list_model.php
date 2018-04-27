@@ -21,6 +21,10 @@ class Invoice_list_model extends CI_Model {
 			$this->db->where('inv_id',$_POST['inv_id']);
 		}
 
+		if(isset($_POST['quantity_type']) && !$_POST['quantity_type'] == ''){
+			$this->db->where('is_complete','0');
+		}
+
 		if(isset($_POST['start_date']) && !$_POST['start_date'] == ''){
 			$this->db->where('inv_date >= ',$_POST['start_date']);
 		}

@@ -14,7 +14,7 @@ $last_entery  = end($bill);
  
 <div class="col-xs-12 col-md-12 col-lg-12 pull-left">
 				<?php if (isset($last_entery['bill_id']) && !empty($last_entery['bill_id'])) { ?>
-				 <form id="pay_remain_balance" method="post" action="<?php echo base_url("product/add_remain_balance"); ?>">
+				 
                     <div class="panel panel-default height">
 
                         <div class="panel-heading text-center">Total Bill Record</div>
@@ -49,7 +49,7 @@ $last_entery  = end($bill);
 										<td><?php echo ($pro['payment_type']); echo $pro['payment_type']=='cheque'? '</br><b>'.$pro['cheque_number'].'</b>':'';?></td><!--  echo $pro['payment_type']=='cheque'? '</br><b>'.$pro['cheque_number'].'</b>':''; -->
 										<td><?php echo $pro['balance']; ?></td>
 										<td><button class="btn btn-info btn-mini" style="font-size:12px;" amount_paid="<?php echo $pro['amount_paid'] ?>" ledger_id="<?php echo $pro['ledger_id'] ?>" paid_date="<?php echo $last_entery['created_on'] ?>" onclick="hide_all_data(this)"><i class="fa fa-pencil-square-o"></i></button>
-										  <button class="btn btn-danger btn-mini" style="font-size:12px;" onclick=del_stock_product_balnce("'<?php echo $pro['bill_id'];?>'")><i class="fa fa-trash-o"></i></button>
+										 <!--  <button class="btn btn-danger btn-mini" style="font-size:12px;" onclick=del_stock_product_balnce("'<?php echo $pro['bill_id'];?>'")><i class="fa fa-trash-o"></i></button> -->
 										</td>
 										
 									  </tr>
@@ -86,7 +86,7 @@ $last_entery  = end($bill);
                               </div>
 						</div>
                     </div>
-				</form>	 
+				
 				<?php } else { ?>
 			
 				<div class="panel panel-default height">
@@ -130,7 +130,6 @@ function hide_all_data(obj){
 
 
   var base_url = '<?php echo base_url(); ?>';
-
 $("#update_paid_amounnt_form").validate({
       submitHandler: function (form) {
   var l = Ladda.create( document.querySelector( '.ladda-button' ) );

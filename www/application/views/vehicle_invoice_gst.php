@@ -352,11 +352,11 @@ $errormessage =$this->session->flashdata('error');
         <input type="text" id="total" class="form-control" name="total" placeholder="Net Total" readonly="" value="<?php echo @$inv['total']; ?>">
         </div>
         </div>
-		
+		<?php if(!isset($inv['inv_id'])){ ?>
 		<div class="form-group">
             <label for="inputEmail3" class="col-sm-7 control-label">Amount To Be Paid*</label>
             <div class="col-sm-5">
-                <input type="text" id="Amount_paid" class="form-control" name="Amount_paid" onkeyup="Left_balance(this)" placeholder="Amount Paid" value="<?php echo @$bill['amount_paid']; ?>" >
+                <input type="text" id="Amount_paid" class="form-control" name="Amount_paid" onkeyup="Left_balance(this)" placeholder="Amount Paid">
             </div>
         </div>
 		<div class="form-group">
@@ -389,7 +389,7 @@ $errormessage =$this->session->flashdata('error');
                 <input type="text"  class="form-control" name="cheque_number" placeholder="Cheque Number" value="<?php echo @$bill['cheque_number']; ?>" >
             </div>
         </div>
-
+<?php } ?>
     <div class="form-group">
         <div class="col-xs-5 col-xs-offset-1">
             <button type="submit" class="btn btn-default ladda-button" data-style="expand-left"><span class="ladda-label"><?php echo isset($inv['inv_id'])? 'Update':'Submit'; ?></span></button>
@@ -502,7 +502,8 @@ grand_total = grand_total - offer_amount;
 grand_total = grand_total + parseFloat(labour);
 
 $('#total').val(grand_total.toFixed(2));
-
+$('#Amount_paid').val(grand_total.toFixed(2));
+/*$('#Amount_paid').attr('max',grand_total.toFixed(2));*/
 changeBalanceLeft();
 }
 
