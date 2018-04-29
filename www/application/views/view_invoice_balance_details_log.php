@@ -44,11 +44,11 @@ $last_entery  = end($bill);
 									<?php foreach ($bill as $key => $pro) { ?>
 									
 									  <tr>
-										<td scope="row"><?php echo $pro['created_on']; ?></td>
+										<td scope="row"><?php echo $pro['added_date']; ?></td>
 										<td><?php echo $pro['amount_paid']; ?></td>
 										<td><?php echo $pro['balance']; ?></td>
-										<td><button class="btn btn-info btn-mini" style="font-size:12px;" amount_paid="<?php echo $pro['amount_paid'] ?>" ledger_id="<?php echo $pro['ledger_id'] ?>" balance="<?php echo $pro['balance'] ?>" paid_date="<?php echo $last_entery['created_on'] ?>" onclick="hide_all_data(this)"><i class="fa fa-pencil-square-o"></i></button>
-										  <button class="btn btn-danger btn-mini" style="font-size:12px;" onclick=del_stock_product_balnce("'<?php echo $pro['bill_id'];?>'")><i class="fa fa-trash-o"></i></button>
+										<td><button class="btn btn-info btn-mini" style="font-size:12px;" amount_paid="<?php echo $pro['amount_paid'] ?>" ledger_id="<?php echo $pro['ledger_id'] ?>" balance="<?php echo $pro['balance'] ?>" paid_date="<?php echo $last_entery['added_date'] ?>" onclick="hide_all_data(this)"><i class="fa fa-pencil-square-o"></i></button>
+										 <!--  <button class="btn btn-danger btn-mini" style="font-size:12px;" onclick=del_stock_product_balnce("'<?php echo $pro['bill_id'];?>'")><i class="fa fa-trash-o"></i></button> -->
 										</td>
 										
 									  </tr>
