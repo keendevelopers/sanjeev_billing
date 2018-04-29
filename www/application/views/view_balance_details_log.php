@@ -62,7 +62,7 @@ $last_entery  = end($bill);
 										<div class="clearfix"></div>
 											<form id="update_paid_amounnt_form">
 												<div class="row">
-													<!-- <input type="hidden" id="total_balance" name="total_balance" value="<?php echo $last_entery['balance']; ?>"/> -->
+													<input type="hidden" id="total_balance" name="total_balance" value="<?php echo $last_entery['balance']; ?>"/>
 													<input type="hidden" id="ledger_id" name="ledger_id" />
 													<div class="col-md-5"><h4><b>Paid Date:</b></h4></div><div class="col-md-7"><h5><input type="text"  class="form-control required flatpickr" name="paid_date" id="paid_date"  value="" readonly /></h5></div></div>
 
@@ -152,6 +152,7 @@ if(data.result == 'unauth') {
     $('#product_add_form')[0].reset();*/
     $('#actual_all_data').show();
 	$('#edit_form').hide();
+	$('#datatable').DataTable().ajax.reload();
 	$('#myModal').modal('hide');
     $.toaster({ priority : data.result, title : data.title, message : data.message});
     /*  setInterval(function(){window.location.replace(base_url+"user");},3000);*/

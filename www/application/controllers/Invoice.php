@@ -88,6 +88,7 @@ class Invoice extends CI_Controller
                 );
 
                 if (isset($PostData['inv_id']) && !empty($PostData['inv_id'])) {
+                     $old_bill_details = $this->db->where('inv_id', $PostData['inv_id'])->get('invoice')->row_array();
                     if ($this->db->where('inv_id', $PostData['inv_id'])->update('invoice', $bill)) {
                         $select_data = $this->db->where('inv_id', $PostData['inv_id'])->get('invoice_products')->result_array();
                         foreach ($select_data as $key => $value) {
@@ -115,8 +116,8 @@ class Invoice extends CI_Controller
                             }
                         }
 
-						if($old_bill_details['Total'] != $PostData['Total']){
-                            $plus = $PostData['Total']-$old_bill_details['Total'];
+						if($old_bill_details['total'] != $PostData['total']){
+                            $plus = $PostData['total']-$old_bill_details['total'];
                             /*$this->db->where('Ledger_Id',$old_ledger['Ledger_Id'])
                             ->set('Amount', 'Amount+'.$plus, FALSE)
                             ->set('Description',$input['Description'])
@@ -129,6 +130,13 @@ class Invoice extends CI_Controller
                             ->set('balance','balance+'.$plus,FALSE)      
                             ->update('ledger');
                         }
+
+                        $last_entry = $this->db->where('bill_id',$PostData['inv_id'])->order_by('ledger_id','desc')->get('ledger')->row_array();
+                        $is_complete = $last_entry['balance']>0? '0':'1';
+                        if(isset($last_entry['balance']) && $last_entry['ledger_type'] == 'sell'){
+                         $this->db->where('inv_id',$PostData['inv_id'])->update('invoice',array('is_complete'=>$is_complete));
+                        }
+
                         $data = array(
                             'result'  => 'success',
                             'message' => 'Details updated successfully!',
@@ -209,6 +217,83 @@ class Invoice extends CI_Controller
             }
         } else {
             header('location: ' . base_url());
+        }
+    }
+
+
+    public function add_remain_balance(){
+        $data = array();
+        $auth = checkAdminLogin();
+        if ($auth == 1) {
+            
+            $PostData = $this->input->post();
+            $this->form_validation->set_rules('new_pay', 'New Payment', 'required');
+            $this->form_validation->set_rules('added_date', 'Added Date', 'required');
+            
+            if ($this->form_validation->run() == false) {
+                
+                $error = $this->form_validation->error_array();
+                foreach ($error as $key => $value) {
+                    $error = $value;
+                }
+
+                $data = array(
+                    'result'  => 'danger',
+                    'message' => $error,
+                    'title'   => 'Error',
+                );
+                echo json_encode($data);
+                exit;
+            } else {
+                
+                $left_info = array(
+                            'ledger_type'   =>  $_POST['ledger_type'],
+                            'bill_id'       =>  $_POST['bill_id'],
+                            'total_amount'  =>  $_POST['total_amount'] ? $_POST['total_amount']: "",
+                            'amount_paid'   =>  $_POST['new_pay'] ? $_POST['new_pay'] : "",
+                            'balance'       =>  $_POST['balance_left'] ? $_POST['balance_left'] : "",
+                            'payment_type'  =>  $_POST['payment_type'] ? $_POST['payment_type'] : "",
+                            'cheque_number' =>  isset($_POST['cheque_number']) ? $_POST['cheque_number'] : "" ,
+                            'modified_on'   =>  date('Y-m-d H:i:s'),
+                            'created_on'    =>  date('Y-m-d H:i:s'),
+                            'added_date'    =>  $_POST['added_date'],
+                            'userId'        =>  $_SESSION['admin_id'],
+                        );
+                        
+                if ($this->db->insert('ledger', $left_info)) {
+
+                    $is_complete = $_POST['balance'] == $_POST['new_pay']? '1':'0';
+
+                    $data = array(
+                        'result'  => 'success',
+                        'message' => 'Details added successfully!',
+                        'title'   => 'Successfull',
+                    );
+                    if($_POST['ledger_type'] == 'buy'){
+                        if(isset($_POST['mark_complete']) || ($is_complete == '1')){
+                        $this->db->where('BillId',$_POST['bill_id'])->update('buyed_product_bill',array('is_complete'=>'1'));
+                        }
+                    }else{
+                        if(isset($_POST['mark_complete']) || ($is_complete == '1')){
+                        $this->db->where('inv_id',$_POST['bill_id'])->update('invoice',array('is_complete'=>'1'));
+                        }
+                    }
+                    
+                    /*redirect('product/manage_stock');
+                    header("Refresh:0");*/
+                    echo json_encode($data);
+                    exit;
+                } else {
+                    $data = array(
+                        'result'  => 'danger',
+                        'message' => 'Unable to add details!',
+                        'title'   => 'Error',
+                    );
+                    echo json_encode($data);
+                    exit;
+                }
+            }
+
         }
     }
 

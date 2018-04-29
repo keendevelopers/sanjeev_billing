@@ -2,7 +2,7 @@
 
 
 // $bill          = $this->db->where(array('bill_id' => $parm,'ledger_type' => 'buy'))->get('ledger')->result_array();
-$bill          = $this->db->where(array('bill_id' => $parm,'ledger_type' => 'sell'))->get('ledger')->result_array();
+$bill          = $this->db->where(array('bill_id' => $parm,'ledger_type' => 'sell'))->order_by('ledger_id','desc')->get('ledger')->result_array();
 // echo $this->db->last_query();die();
 
 // To Get Last Entry of this bill id
@@ -47,7 +47,7 @@ $last_entery  = end($bill);
 										<td scope="row"><?php echo $pro['created_on']; ?></td>
 										<td><?php echo $pro['amount_paid']; ?></td>
 										<td><?php echo $pro['balance']; ?></td>
-										<td><button class="btn btn-info btn-mini" style="font-size:12px;" amount_paid="<?php echo $pro['amount_paid'] ?>" balance="<?php echo $pro['balance'] ?>" paid_date="<?php echo $last_entery['created_on'] ?>" onclick="hide_all_data(this)"><i class="fa fa-pencil-square-o"></i></button>
+										<td><button class="btn btn-info btn-mini" style="font-size:12px;" amount_paid="<?php echo $pro['amount_paid'] ?>" ledger_id="<?php echo $pro['ledger_id'] ?>" balance="<?php echo $pro['balance'] ?>" paid_date="<?php echo $last_entery['created_on'] ?>" onclick="hide_all_data(this)"><i class="fa fa-pencil-square-o"></i></button>
 										  <button class="btn btn-danger btn-mini" style="font-size:12px;" onclick=del_stock_product_balnce("'<?php echo $pro['bill_id'];?>'")><i class="fa fa-trash-o"></i></button>
 										</td>
 										
@@ -58,14 +58,24 @@ $last_entery  = end($bill);
 							 
                                 <div class="col-md-12">
 									<div id="edit_form" style="display:none;">
-											<form id="" method="post" >
+											<form id="update_paid_amounnt_form">
 												<div class="row">
-													<div class="col-md-5"><h4><b>Last Paid Date:</b></h4></div><div class="col-md-7"><h5><input type="text"  class="form-control required" name="paid_date" id="paid_date"  value="" readonly /></h5></div></div>
-													
-													<div class="row"><div class="col-md-5"><h4><b>Balance:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="balance_edit" id="balance_edit"  value="" readonly /></h4></div></div>
-													<div class="row"><div class="col-md-5"><h4><b>Last Paid:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="amount_paid_edit" id="amount_paid_edit"  value=""  /></h4></div></div>
+													<input type="hidden" id="total_balance" name="total_balance" value="<?php echo $last_entery['balance']; ?>"/>
+													<input type="hidden" id="ledger_id" name="ledger_id" />
+													<div class="col-md-5"><h4><b>Paid Date:</b></h4></div><div class="col-md-7"><h5><input type="text"  class="form-control required flatpickr" name="paid_date" id="paid_date"  value="" readonly /></h5></div></div>
+
+													<div class="row"><div class="col-md-5"><h4><b>Paid Amount:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="amount_paid_edit" id="amount_paid_edit"  /></h4></div></div>
 												
-												 <div class="row"><div class="col-md-5"></div><div class="col-md-7"><h4><button type="submit" class="btn btn-default ladda-button" data-style="expand-left"><span class="ladda-label">Update</span></div></h4></div></div>
+													<!-- <div class="row"><div class="col-md-5"><h4><b>Balance:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="balance_edit" id="balance_edit"  value="" readonly /></h4></div></div> -->
+
+												 <div class="row"><div class="col-md-5"></div><div class="col-md-7"><h4>
+
+
+												 	<button type="submit" class="btn btn-default waves-effect waves-light ladda-button" data-style="expand-left">
+											   		<span class="ladda-label">Update Details</span>
+											   	</button>
+
+												 
 												</div>												
 											</form>
 										</div>
@@ -91,7 +101,6 @@ $last_entery  = end($bill);
 <script>
 
 
-<script>
 
 $(".flatpickr").flatpickr({dateFormat: "d-m-Y",});
 
@@ -143,6 +152,7 @@ if(data.result == 'unauth') {
     $('#product_add_form')[0].reset();*/
     $('#actual_all_data').show();
 	$('#edit_form').hide();
+	$('#table').DataTable().ajax.reload();
 	$('#myModal').modal('hide');
     $.toaster({ priority : data.result, title : data.title, message : data.message});
     /*  setInterval(function(){window.location.replace(base_url+"user");},3000);*/

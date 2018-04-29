@@ -18,7 +18,7 @@ $last_entery  = end($bill);
 
 <div class="col-xs-12 col-md-12 col-lg-12 pull-left">
 			<?php if (isset($last_entery['bill_id']) && !empty($last_entery['bill_id'])) { ?>
-				<form id="pay_remain_balance" method="post" action="<?php echo base_url("product/add_remain_balance"); ?>">
+				<form id="pay_remain_balance">
                     <div class="panel panel-default height">
 
                         <div class="panel-heading text-center">Remain Balance Details</div>
@@ -53,7 +53,7 @@ $last_entery  = end($bill);
 								<div class="col-md-5">
 									<h4><b>Date:</b></h4>
 								</div>
-							    <div class="col-md-7"><input type="text" id="added_date" class="form-control flatpickr required" name="added_date" placeholder="Date"  value="<?php echo isset($bill['PurchasedOn'])? date('d-m-Y', strtotime($bill['PurchasedOn'])): ''; ?>"  >
+							    <div class="col-md-7"><input type="text" id="added_date" class="form-control flatpickr required" name="added_date" placeholder="Date"  >
 							    </div>
 							</div>
 						   <div class="row"><div class="col-md-5"><h4><b>Amount*:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="new_pay" id="new_pay" placeholder="Amount To Be Paid" onkeyup="Left_balance()" max="<?php echo $last_entery['balance']; ?>"/></div></h4></div>
@@ -132,9 +132,9 @@ if(data.result == 'unauth') {
 /*  window.location.replace(base_url+"Welcome");*/
 
 }else if(data.result == 'success'){
-   table.ajax.reload();
+   $('#table').DataTable().ajax.reload();
     $('#myModal').modal('hide');
-    $('#product_add_form')[0].reset();
+    $('#pay_remain_balance')[0].reset();
     $.toaster({ priority : data.result, title : data.title, message : data.message});
     /*  setInterval(function(){window.location.replace(base_url+"user");},3000);*/
 }

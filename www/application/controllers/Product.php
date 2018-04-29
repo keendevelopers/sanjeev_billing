@@ -361,6 +361,12 @@ class Product extends CI_Controller
                             ->update('ledger');
                         }
 
+                        $last_entry = $this->db->where('bill_id',$PostData['BillId'])->order_by('ledger_id','desc')->get('ledger')->row_array();
+                        $is_complete = $last_entry['balance']>0? '0':'1';
+                        if(isset($last_entry['balance']) && $last_entry['ledger_type'] == 'buy'){
+                         $this->db->where('BillId',$PostData['BillId'])->update('buyed_product_bill',array('is_complete'=>$is_complete));
+                        }
+
                         $data = array(
                             'result'  => 'success',
                             'message' => 'Details updated successfully!',
@@ -597,8 +603,14 @@ class Product extends CI_Controller
                         'message' => 'Details updated successfully!',
                         'title'   => 'Successfull',
                     );
-                    if(isset($_POST['mark_complete'])){
-                        $this->db->where('BillId',$_POST['bill_id'])->update('buyed_product_bill',array('is_complete'=>'1'));
+
+                    $last_entry = $this->db->where('bill_id',$old_entry['bill_id'])->order_by('ledger_id','desc')->get('ledger')->row_array();
+                    $is_complete = $last_entry['balance']>0? '0':'1';
+                    if(isset($last_entry['balance']) && $last_entry['ledger_type'] == 'buy'){
+                        $this->db->where('BillId',$old_entry['bill_id'])->update('buyed_product_bill',array('is_complete'=>$is_complete));
+                    }
+                     if(isset($last_entry['balance']) && $last_entry['ledger_type'] == 'sell'){
+                        $this->db->where('inv_id',$old_entry['bill_id'])->update('invoice',array('is_complete'=>$is_complete));
                     }
                     /*redirect('product/manage_stock');
                     header("Refresh:0");*/
