@@ -516,17 +516,20 @@ class Product extends CI_Controller
 						);
 						
                 if ($this->db->insert('ledger', $left_info)) {
+
+                    $is_complete = $_POST['balance'] == $_POST['new_pay']? '1':'0';
+
                     $data = array(
                         'result'  => 'success',
                         'message' => 'Details added successfully!',
                         'title'   => 'Successfull',
                     );
 					if($_POST['ledger_type'] == 'buy'){
-						if(isset($_POST['mark_complete'])){
+						if(isset($_POST['mark_complete']) || ($is_complete == '1')){
                         $this->db->where('BillId',$_POST['bill_id'])->update('buyed_product_bill',array('is_complete'=>'1'));
                         }
 					}else{
-						if(isset($_POST['mark_complete'])){
+						if(isset($_POST['mark_complete']) || ($is_complete == '1')){
                         $this->db->where('inv_id',$_POST['bill_id'])->update('invoice',array('is_complete'=>'1'));
                         }
 					}
@@ -583,14 +586,15 @@ class Product extends CI_Controller
                 $old_entry = $this->db->where('ledger_id',$_POST['ledger_id'])->get('ledger')->row_array();
                 if ($this->db->where('ledger_id',$_POST['ledger_id'])->update('ledger', $left_info)) {
 
-                    $plus = $_POST['amount_paid_edit']-$old_entry['amount_paid'];
-                    $this->db->where(array('ledger_id>'=>$_POST['ledger_id'],'bill_id'=>$old_entry['bill_id']))
+                    $plus = $old_entry['amount_paid']-$_POST['amount_paid_edit'];
+                    /*print_r($plus);*/
+                    $this->db->where(array('ledger_id>='=>$_POST['ledger_id'],'bill_id'=>$old_entry['bill_id']))
                             ->set('balance','balance+'.$plus,FALSE)      
                             ->update('ledger');
 
                     $data = array(
                         'result'  => 'success',
-                        'message' => 'Details added successfully!',
+                        'message' => 'Details updated successfully!',
                         'title'   => 'Successfull',
                     );
                     if(isset($_POST['mark_complete'])){

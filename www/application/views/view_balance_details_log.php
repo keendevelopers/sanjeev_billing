@@ -1,7 +1,7 @@
 <?php
 
 
-$bill          = $this->db->where(array('bill_id' => $parm,'ledger_type' => 'buy'))->get('ledger')->result_array();
+$bill          = $this->db->where(array('bill_id' => $parm,'ledger_type' => 'buy'))->order_by('ledger_id','desc')->get('ledger')->result_array();
 // echo $this->db->last_query();die();
 
 // To Get Last Entry of this bill id
@@ -56,32 +56,33 @@ $last_entery  = end($bill);
 									<?php } ?>
                                 </tbody>
                               </table> 
-							  <table class="table" id="edit_form" style"display:none:" >
+							 
                                 <div class="col-md-12">
 									<div id="edit_form" style="display:none;">
-											<form id="update_paid_amounnt_form" method="post" >
+										<div class="clearfix"></div>
+											<form id="update_paid_amounnt_form">
 												<div class="row">
-													<input type="hidden" id="total_balance" name="total_balance" value="<?php echo $last_entery['balance']; ?>"/>
+													<!-- <input type="hidden" id="total_balance" name="total_balance" value="<?php echo $last_entery['balance']; ?>"/> -->
 													<input type="hidden" id="ledger_id" name="ledger_id" />
 													<div class="col-md-5"><h4><b>Paid Date:</b></h4></div><div class="col-md-7"><h5><input type="text"  class="form-control required flatpickr" name="paid_date" id="paid_date"  value="" readonly /></h5></div></div>
 
-													<div class="row"><div class="col-md-5"><h4><b>Paid Amount:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="amount_paid_edit" id="amount_paid_edit"  value=""  /></h4></div></div>
+													<div class="row"><div class="col-md-5"><h4><b>Paid Amount:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="amount_paid_edit" id="amount_paid_edit"  /></h4></div></div>
 												
 													<!-- <div class="row"><div class="col-md-5"><h4><b>Balance:</b></h4></div><div class="col-md-7"><h4><input type="text"  class="form-control required" name="balance_edit" id="balance_edit"  value="" readonly /></h4></div></div> -->
 
 												 <div class="row"><div class="col-md-5"></div><div class="col-md-7"><h4>
 
 
-												 	<button type="submit" value="Add Vehicle Info" class="btn btn-default waves-effect waves-light ladda-button" data-style="expand-left">
+												 	<button type="submit" class="btn btn-default waves-effect waves-light ladda-button" data-style="expand-left">
 											   		<span class="ladda-label">Update Details</span>
 											   	</button>
 
 												 
 												</div>												
 											</form>
-										</div>
+										
 									</div>
-                              </table> 
+                            
                               </div>
                               </div>
 						</div>
@@ -124,10 +125,6 @@ function hide_all_data(obj){
 	$('#amount_paid_edit').attr('max',amount_paid+balance);
 	
 }
-</script>
-
-<script>
-
 
   var base_url = '<?php echo base_url(); ?>';
 $("#update_paid_amounnt_form").validate({
@@ -150,9 +147,12 @@ if(data.result == 'unauth') {
 /*  window.location.replace(base_url+"Welcome");*/
 
 }else if(data.result == 'success'){
-   table.ajax.reload();
+  /* table.ajax.reload();
     $('#myModal').modal('hide');
-    $('#product_add_form')[0].reset();
+    $('#product_add_form')[0].reset();*/
+    $('#actual_all_data').show();
+	$('#edit_form').hide();
+	$('#myModal').modal('hide');
     $.toaster({ priority : data.result, title : data.title, message : data.message});
     /*  setInterval(function(){window.location.replace(base_url+"user");},3000);*/
 }
@@ -168,17 +168,6 @@ $.toaster({ priority : 'danger', title : 'Error', message : 'Not Done!'});
 }
 
 });
-
-$('#PackingType').change(function(){
-  if($('#PackingType').val() == 'Custom'){
-    $('#PerPack_div').hide();
-    $('#PerPack').removeClass('required');
-    $('#PerPack').val('');
-  }else{
-    $('#PerPack_div').show();
-    $('#PerPack').addClass('required');
-  }
-})
 
 }
 });

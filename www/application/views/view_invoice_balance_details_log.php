@@ -15,7 +15,7 @@ $last_entery  = end($bill);
  
 <div class="col-xs-12 col-md-12 col-lg-12 pull-left">
 				<?php if (isset($last_entery['bill_id']) && !empty($last_entery['bill_id'])) { ?>
-				 <form id="pay_remain_balance" method="post" action="<?php echo base_url("product/add_remain_balance"); ?>">
+				<!--  <form id="pay_remain_balance" method="post" action="<?php //echo base_url("product/add_remain_balance"); ?>"> -->
                     <div class="panel panel-default height">
 
                         <div class="panel-heading text-center">Total Bill Record</div>
@@ -55,7 +55,7 @@ $last_entery  = end($bill);
 									<?php } ?>
                                 </tbody>
                               </table> 
-							  <table class="table" id="edit_form" style"display:none:" >
+							 
                                 <div class="col-md-12">
 									<div id="edit_form" style="display:none;">
 											<form id="" method="post" >
@@ -70,12 +70,12 @@ $last_entery  = end($bill);
 											</form>
 										</div>
 									</div>
-                              </table> 
+                             
                               </div>
                               </div>
 						</div>
                     </div>
-				</form>	 
+			<!-- 	</form>	  -->
 				<?php } else { ?>
 			
 				<div class="panel panel-default height">
@@ -91,6 +91,9 @@ $last_entery  = end($bill);
 <script>
 
 
+<script>
+
+$(".flatpickr").flatpickr({dateFormat: "d-m-Y",});
 
 
 function hide_all_data(obj){
@@ -100,13 +103,64 @@ function hide_all_data(obj){
 	$('#edit_form').show();
 	
 	var paid_date = $(obj).attr('paid_date');
-	var balance = $(obj).attr('balance');
-	var amount_paid = $(obj).attr('amount_paid');
+	var ledger_id = $(obj).attr('ledger_id');
+	/*$('#paid_date').setDate(paid_date);*/
+	var balance = parseInt($('#total_balance').val());
+	var amount_paid = parseInt($(obj).attr('amount_paid'));
 	
 	
 	$('#paid_date').val(paid_date);
-	$('#balance_edit').val(balance);
+	/*$('#balance_edit').val(balance);*/
 	$('#amount_paid_edit').val(amount_paid);
+	$('#ledger_id').val(ledger_id);
+	$('#amount_paid_edit').attr('max',amount_paid+balance);
 	
 }
-</script>
+
+  var base_url = '<?php echo base_url(); ?>';
+$("#update_paid_amounnt_form").validate({
+      submitHandler: function (form) {
+  var l = Ladda.create( document.querySelector( '.ladda-button' ) );
+        l.start();
+    var formData = new FormData($('#update_paid_amounnt_form')[0]);
+
+$.ajax({
+type:'POST',
+dataType:'json',
+url: base_url+"product/update_paid_amount_entry", 
+data: formData,
+contentType: false,
+processData: false,
+success:function(data){  
+  l.stop();
+if(data.result == 'unauth') {
+
+/*  window.location.replace(base_url+"Welcome");*/
+
+}else if(data.result == 'success'){
+  /* table.ajax.reload();
+    $('#myModal').modal('hide');
+    $('#product_add_form')[0].reset();*/
+    $('#actual_all_data').show();
+	$('#edit_form').hide();
+	$('#myModal').modal('hide');
+    $.toaster({ priority : data.result, title : data.title, message : data.message});
+    /*  setInterval(function(){window.location.replace(base_url+"user");},3000);*/
+}
+else{
+  $.toaster({ priority : data.result, title : data.title, message : data.message});
+}
+},
+
+error: function(){
+ l.stop();
+$.toaster({ priority : 'danger', title : 'Error', message : 'Not Done!'});
+  return true;
+}
+
+});
+
+}
+});
+
+                </script>

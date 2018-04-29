@@ -257,6 +257,7 @@ $errormessage =$this->session->flashdata('error');
         <input type="text" id="Total" class="form-control" name="Total" placeholder="Net Total" readonly="" value="<?php echo @$bill['Total']; ?>">
         </div>
         </div>
+        <?php if(!isset($bill['BillId']) && empty($bill['BillId'])){ ?>
 		<!--pawan code  start -->
 		<div class="form-group">
             <label for="inputEmail3" class="col-sm-7 control-label">Amount To Be Paid*</label>
@@ -295,6 +296,7 @@ $errormessage =$this->session->flashdata('error');
         </div>
 		
 		<!--pawan code end start -->
+        <?php } ?>
     <div class="form-group">
         <div class="col-xs-5 col-xs-offset-1">
             <button type="submit" class="btn btn-default ladda-button" data-style="expand-left"><span class="ladda-label"><?php echo isset($bill['BillId'])? 'Update':'Submit'; ?></span></button>
